@@ -10,8 +10,10 @@
 }
 
 /* Hero content above flames */
-#hero > .relative {
-    z-index: 10;
+#hero {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
 }
 
 /* Body/HTML */
