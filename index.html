@@ -19,7 +19,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <!-- Custom CSS -->
+    <!-- Custom Styles -->
     <style>
         html, body {
             margin: 0;
@@ -29,7 +29,7 @@
             scroll-behavior: smooth;
         }
 
-        /* NavBar Styling */
+        /* NAVBAR */
         nav {
             position: fixed;
             top: 0;
@@ -64,7 +64,7 @@
             color: #22c55e;
         }
 
-        /* Canvas Background for Flames */
+        /* FLAME BACKGROUND */
         #flameCanvas {
             position: absolute;
             top: 0;
@@ -75,26 +75,26 @@
             background-color: black;
         }
 
-        /* Skill Bars */
+        /* SKILL BARS */
         .skill-container {
             margin-top: 1rem;
         }
 
         .skill-bar {
-            height: 10px;
+            height: 12px;
             background: #1e293b;
-            border-radius: 5px;
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .skill-progress {
-            height: 10px;
+            height: 12px;
             width: 0;
             background: linear-gradient(90deg, #22c55e, #16a34a);
             transition: width 1s ease-in-out;
         }
 
-        /* Contact Section */
+        /* CONTACT SECTION */
         #contact {
             background-color: #f8fafc;
             color: #0f172a;
@@ -102,7 +102,7 @@
 
         .contact-icons a {
             margin: 0 10px;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #0f172a;
             transition: transform 0.3s;
         }
@@ -115,7 +115,6 @@
 </head>
 
 <body>
-
     <!-- Navigation Bar -->
     <nav>
         <ul>
@@ -170,6 +169,18 @@
             </div>
         </section>
 
+        <!-- Projects Section -->
+        <section class="section bg-white flex flex-col items-center justify-center text-center p-12" id="projects">
+            <h2 class="text-3xl font-bold text-gray-800">Projects</h2>
+            <p class="mt-4 max-w-3xl text-gray-600">Showcasing my key aerospace research and engineering projects.</p>
+        </section>
+
+        <!-- Publications Section -->
+        <section class="section bg-gray-100 flex flex-col items-center justify-center text-center p-12" id="publications">
+            <h2 class="text-3xl font-bold text-gray-800">Publications</h2>
+            <p class="mt-4 max-w-3xl text-gray-600">Published journal papers, conference talks, and academic reports.</p>
+        </section>
+
         <!-- Contact Section -->
         <section class="section flex flex-col items-center justify-center text-center p-12" id="contact">
             <h2 class="text-3xl font-bold">Let's Connect</h2>
@@ -183,11 +194,49 @@
         </section>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/flames.js"></script>
-
+    <!-- Flame Animation Script -->
     <script>
-        // FullPage.js Init
+        const canvas = document.getElementById("flameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function flameEffect() {
+            let particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: canvas.height,
+                    size: Math.random() * 3 + 1,
+                    speed: Math.random() * 2 + 1,
+                    color: `hsl(${Math.random() * 30}, 90%, 60%)`
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                    p.y -= p.speed;
+                    p.size *= 0.96;
+                    if (p.size < 0.3) {
+                        p.x = Math.random() * canvas.width;
+                        p.y = canvas.height;
+                        p.size = Math.random() * 3 + 1;
+                    }
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        flameEffect();
+    </script>
+
+    <!-- FullPage Init + Skills Animation -->
+    <script>
         new fullpage('#fullpage', {
             anchors: ['home', 'about', 'skills', 'projects', 'publications', 'contact'],
             navigation: true,
@@ -197,30 +246,14 @@
             responsiveWidth: 900,
             autoScrolling: true,
             fitToSection: true,
-        });
-
-        // Animate Skill Bars
-        function animateSkill(id, percent) {
-            document.querySelector(id).style.width = percent + "%";
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            fullpage_api.setAllowScrolling(true);
-        });
-
-        // GSAP Animations
-        gsap.utils.toArray('.section').forEach(section => {
-            gsap.from(section.querySelectorAll('h1,h2,p,.skill-progress'), {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 75%',
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
+            afterLoad: function(origin, destination){
+                if(destination.anchor === 'skills') {
+                    gsap.to("#skill1", { width: "95%", duration: 1 });
+                    gsap.to("#skill2", { width: "90%", duration: 1 });
+                    gsap.to("#skill3", { width: "85%", duration: 1 });
+                    gsap.to("#skill4", { width: "80%", duration: 1 });
+                }
+            }
         });
     </script>
 
