@@ -1,261 +1,330 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pratik Tiwari | Aerospace Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratik Tiwari — Portfolio (Flame + Smoke)</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind (CDN for prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
 
-    <!-- FullPage.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.js"></script>
+  <!-- fullPage.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.js"></script>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-    <!-- Custom Styles -->
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f172a;
-            scroll-behavior: smooth;
-        }
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-        /* NAVBAR */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(6px);
-            z-index: 1000;
-            transition: background 0.3s ease-in-out;
-        }
-
-        nav.scrolled {
-            background: rgba(15, 23, 42, 0.9);
-        }
-
-        nav ul {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        nav ul li a {
-            color: white;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: #22c55e;
-        }
-
-        /* FLAME BACKGROUND */
-        #flameCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-color: black;
-        }
-
-        /* SKILL BARS */
-        .skill-container {
-            margin-top: 1rem;
-        }
-
-        .skill-bar {
-            height: 12px;
-            background: #1e293b;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 12px;
-            width: 0;
-            background: linear-gradient(90deg, #22c55e, #16a34a);
-            transition: width 1s ease-in-out;
-        }
-
-        /* CONTACT SECTION */
-        #contact {
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
-
-        .contact-icons a {
-            margin: 0 10px;
-            font-size: 1.6rem;
-            color: #0f172a;
-            transition: transform 0.3s;
-        }
-
-        .contact-icons a:hover {
-            color: #22c55e;
-            transform: scale(1.2);
-        }
-    </style>
+  <style>
+    html,body { height:100%; margin:0; background:#071021; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#0f172a; }
+    nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:60}
+    nav .bar{display:flex;gap:18px;padding:10px 16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border-radius:14px;align-items:center}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600}
+    nav a:hover{color:#10b981}
+    /* fullpage sections size/utility */
+    .section{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:48px}
+    /* Hero text on top of the shader */
+    .hero-content{position:relative;z-index:10;max-width:1100px;text-align:left;display:flex;gap:32px;align-items:center}
+    .hero-left{flex:1;color:white}
+    .hero-right{flex:1;display:flex;align-items:center;justify-content:center}
+    .cta{display:inline-flex;gap:12px}
+    /* skills */
+    .skill-bar{height:12px;background:#0f172a;border-radius:999px;overflow:hidden}
+    .skill-fill{height:100%;width:0;background:linear-gradient(90deg,#10b981,#059669);border-radius:999px}
+    /* small responsive tweaks */
+    @media (max-width:900px){ .hero-content{flex-direction:column;text-align:center} nav{left:12px;transform:none} }
+    /* full-screen three canvas */
+    canvas#flame { position: absolute; inset:0; width:100%; height:100%; z-index:0; display:block; }
+  </style>
 </head>
-
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Professional Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
 
-    <!-- Fullpage Wrapper -->
-    <div id="fullpage">
-
-        <!-- Home Section -->
-        <section class="section relative flex flex-col items-center justify-center text-center text-white" id="home">
-            <canvas id="flameCanvas"></canvas>
-            <h1 class="text-5xl font-bold">Hi, I'm <span class="text-green-400">Pratik Tiwari</span></h1>
-            <p class="text-lg mt-4">Combustion Systems Engineer | Aerospace Propulsion | CFD Specialist</p>
-        </section>
-
-        <!-- About Section -->
-        <section class="section bg-white flex flex-col items-center justify-center text-center p-12" id="about">
-            <h2 class="text-3xl font-bold text-gray-800">About Me</h2>
-            <p class="mt-4 max-w-3xl text-gray-600">
-                I am a combustion systems engineer specializing in high-performance propulsion hardware,
-                hydrogen combustion, and CFD-based optimization for aerospace and energy applications.
-            </p>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="section bg-gray-900 text-white flex flex-col items-center justify-center p-12" id="skills">
-            <h2 class="text-3xl font-bold">Professional Skills</h2>
-            <div class="mt-6 w-1/2">
-                <div class="skill-container">
-                    <p>Combustion Systems</p>
-                    <div class="skill-bar"><div id="skill1" class="skill-progress"></div></div>
-                </div>
-                <div class="skill-container">
-                    <p>CFD Analysis</p>
-                    <div class="skill-bar"><div id="skill2" class="skill-progress"></div></div>
-                </div>
-                <div class="skill-container">
-                    <p>Testing & Validation</p>
-                    <div class="skill-bar"><div id="skill3" class="skill-progress"></div></div>
-                </div>
-                <div class="skill-container">
-                    <p>Automation & Data Analysis</p>
-                    <div class="skill-bar"><div id="skill4" class="skill-progress"></div></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="section bg-white flex flex-col items-center justify-center text-center p-12" id="projects">
-            <h2 class="text-3xl font-bold text-gray-800">Projects</h2>
-            <p class="mt-4 max-w-3xl text-gray-600">Showcasing my key aerospace research and engineering projects.</p>
-        </section>
-
-        <!-- Publications Section -->
-        <section class="section bg-gray-100 flex flex-col items-center justify-center text-center p-12" id="publications">
-            <h2 class="text-3xl font-bold text-gray-800">Publications</h2>
-            <p class="mt-4 max-w-3xl text-gray-600">Published journal papers, conference talks, and academic reports.</p>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section flex flex-col items-center justify-center text-center p-12" id="contact">
-            <h2 class="text-3xl font-bold">Let's Connect</h2>
-            <p class="mt-3">Have a project, collaboration, or role in mind? Let's talk!</p>
-            <div class="contact-icons mt-5">
-                <a href="mailto:ptiwari4@vols.utk.edu"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a>
-            </div>
-            <p class="mt-6 text-gray-600">© 2025 Pratik Tiwari</p>
-        </section>
+  <!-- NAV -->
+  <nav aria-label="Main navigation">
+    <div class="bar">
+      <div class="font-semibold text-white">Pratik Tiwari</div>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
     </div>
+  </nav>
 
-    <!-- Flame Animation Script -->
-    <script>
-        const canvas = document.getElementById("flameCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+  <!-- fullpage container -->
+  <div id="fullpage">
 
-        function flameEffect() {
-            let particles = [];
-            for (let i = 0; i < 100; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: canvas.height,
-                    size: Math.random() * 3 + 1,
-                    speed: Math.random() * 2 + 1,
-                    color: `hsl(${Math.random() * 30}, 90%, 60%)`
-                });
-            }
+    <!-- HERO with shader canvas -->
+    <section id="home" class="section bg-black relative">
+      <!-- Three.js canvas will be inserted as #flame -->
+      <canvas id="flame"></canvas>
 
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
-                    ctx.fill();
-                    p.y -= p.speed;
-                    p.size *= 0.96;
-                    if (p.size < 0.3) {
-                        p.x = Math.random() * canvas.width;
-                        p.y = canvas.height;
-                        p.size = Math.random() * 3 + 1;
-                    }
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 id="hero-name" class="text-4xl md:text-5xl font-extrabold">Hi — I'm <span style="color:#10b981">Pratik</span>.</h1>
+          <p id="hero-tag" class="mt-4 text-lg text-gray-100 max-w-xl">
+            Combustion systems engineer • CFD & diagnostics • propulsion test & automation
+          </p>
+          <div class="mt-6 cta">
+            <a href="files/Pratik_Tiwari_CV.pdf" class="px-4 py-2 rounded-lg bg-[#10b981] text-black font-semibold hover:opacity-90">Download CV</a>
+            <a href="#contact" class="px-4 py-2 rounded-lg border border-white text-white hover:bg-white/5">Let’s Connect</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <img src="assets/img/portrait.jpg" alt="Pratik" style="width:220px;height:220px;border-radius:18px;object-fit:cover;box-shadow:0 20px 60px rgba(16,185,129,0.12);border:4px solid rgba(255,255,255,0.03)" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT (education timeline will be added later) -->
+    <section id="about" class="section bg-white">
+      <div style="max-width:900px">
+        <h2 class="text-3xl font-bold mb-4">Education</h2>
+        <!-- Simple list for now; we'll animate later -->
+        <ul style="color:#0f172a;line-height:1.8">
+          <li><strong>M.S. Aerospace Engineering</strong> — UT Space Institute, 2024</li>
+          <li><strong>M.Eng. Aerospace Propulsion</strong> — NUAA, 2020</li>
+          <li><strong>B.Tech. Aerospace Engineering</strong> — SRM University, 2015</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section bg-gray-50">
+      <div style="max-width:900px;text-align:left">
+        <h2 class="text-3xl font-bold mb-4">Professional Skills</h2>
+        <div class="mb-4"><div class="flex justify-between mb-1"><div>Combustion & Propulsion</div><div id="val1">0%</div></div><div class="skill-bar"><div id="fill1" class="skill-fill"></div></div></div>
+        <div class="mb-4"><div class="flex justify-between mb-1"><div>CFD & Thermal Modeling</div><div id="val2">0%</div></div><div class="skill-bar"><div id="fill2" class="skill-fill"></div></div></div>
+        <div class="mb-4"><div class="flex justify-between mb-1"><div>Diagnostics & Testing</div><div id="val3">0%</div></div><div class="skill-bar"><div id="fill3" class="skill-fill"></div></div></div>
+        <div class="mb-4"><div class="flex justify-between mb-1"><div>Automation & Data</div><div id="val4">0%</div></div><div class="skill-bar"><div id="fill4" class="skill-fill"></div></div></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section bg-white">
+      <div style="max-width:900px"><h2 class="text-3xl font-bold mb-4">Projects</h2><p style="color:#0f172a">Project cards will go here.</p></div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section bg-gray-100">
+      <div style="max-width:900px"><h2 class="text-3xl font-bold mb-4">Publications</h2><p style="color:#0f172a">Journal / Conference / Reports</p></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section bg-white">
+      <div style="max-width:900px;text-align:center">
+        <h2 class="text-3xl font-bold mb-3">Let’s Connect</h2>
+        <p style="color:#0f172a">ptiwari4@vols.utk.edu</p>
+        <div style="margin-top:20px"><a href="https://linkedin.com" target="_blank" style="margin-right:12px"><i class="fa-brands fa-linkedin"></i></a><a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- -------------------------
+       Shader + Three.js Script
+       ------------------------- -->
+  <script>
+  // Setup renderer + scene + camera for a single fullscreen quad shader
+  (function(){
+    const canvas = document.getElementById('flame');
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1); // 2D quad camera
+
+    const geometry = new THREE.PlaneGeometry(2,2);
+
+    // Simple hash / noise helpers will be coded in shader
+    const uniforms = {
+      u_time: { value: 0 },
+      u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      u_mouse: { value: new THREE.Vector2(-10,-10) },
+      u_intensity: { value: 1.0 } // can tweak overall brightness
+    };
+
+    const fragmentShader = `#version 300 es
+    precision highp float;
+    out vec4 fragColor;
+    uniform vec2 u_resolution;
+    uniform float u_time;
+    uniform vec2 u_mouse;
+    uniform float u_intensity;
+
+    // 2D rotation
+    mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
+
+    // Hash / noise (iq's)
+    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123); }
+    float noise(vec2 p){
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      vec2 u = f*f*(3.0-2.0*f);
+      float a = hash(i + vec2(0.0,0.0));
+      float b = hash(i + vec2(1.0,0.0));
+      float c = hash(i + vec2(0.0,1.0));
+      float d = hash(i + vec2(1.0,1.0));
+      return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+    }
+    float fbm(vec2 p){
+      float v = 0.0;
+      float a = 0.5;
+      for(int i=0;i<5;i++){
+        v += a * noise(p);
+        p *= 2.0; a *= 0.5;
+      }
+      return v;
+    }
+
+    void main(){
+      vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+      // center and aspect
+      vec2 pos = uv - 0.5;
+      pos.x *= u_resolution.x / u_resolution.y;
+
+      float t = u_time * 0.6;
+
+      // create a rising base shape (flame core)
+      float y = pos.y + 0.5; // 0 at center
+      float core = smoothstep(0.2, 0.9, 1.0 - y*1.6); // base vertical envelope
+
+      // turbulence (fbm) changes with height, more turbulent near base
+      float n = fbm(vec2(pos.x*2.0, pos.y*3.0 - t*0.8));
+      float flameshape = core * (0.5 + 0.8 * n);
+
+      // radial falloff so flame is narrower near edges
+      float radial = smoothstep(0.9, 0.2, length(pos.xy*vec2(1.0,0.9)));
+
+      // smoke field using larger-scale fbm
+      float smoke = fbm(vec2(pos.x*0.8, pos.y*1.2 - t*0.25));
+      smoke = smoothstep(0.2, 0.8, smoke);
+
+      // combine
+      float intensity = clamp(flameshape * radial, 0.0, 1.0);
+
+      // color ramp: from hot core (white->yellow->orange) to cool edges (smoke gray)
+      vec3 hot = vec3(1.0, 0.96, 0.8);
+      vec3 yellow = vec3(1.0, 0.7, 0.14);
+      vec3 orange = vec3(0.98, 0.42, 0.08);
+      vec3 red = vec3(0.65,0.12,0.03);
+      vec3 smokeCol = vec3(0.06,0.06,0.08);
+
+      // map intensity to color
+      vec3 col = mix(smokeCol, red, intensity);
+      col = mix(col, orange, intensity * 0.8);
+      col = mix(col, yellow, intensity * 0.5);
+      col = mix(col, hot, intensity * 0.25);
+
+      // add flicker based on noise and mouse (local turbulence)
+      float flick = 0.15 * noise(vec2(pos.x*5.0 + u_time*0.8, pos.y*3.0));
+      float md = length((gl_FragCoord.xy - u_mouse) / u_resolution.xy);
+      float mouseBoost = exp(-md*6.0); // local intensification
+      intensity += flick * mouseBoost * 0.6;
+
+      // smoke overlay (soft)
+      float smokeOverlay = smoothstep(0.25, 0.8, smoke) * (1.0 - intensity*0.6);
+
+      // final alpha for smooth blending at top
+      float alpha = clamp(intensity*1.2 + (1.0 - pos.y)*0.2, 0.0, 1.0);
+
+      // Blend smoke (dark) and flame color
+      vec3 finalCol = mix(vec3(0.02,0.02,0.03), col * (0.6 + intensity*0.8), alpha);
+      finalCol = mix(finalCol, vec3(0.08,0.08,0.09), smokeOverlay*0.6);
+
+      // tone mapping / exposure
+      finalCol = 1.0 - exp(-finalCol * (2.2 * u_intensity));
+
+      // small vignette and fade at top
+      float vignette = smoothstep(0.0, 0.8, 1.0 - length(pos)*1.3);
+      finalCol *= vignette;
+
+      fragColor = vec4(finalCol, clamp(alpha + (1.0 - smokeOverlay)*0.05, 0.0, 1.0));
+    }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      fragmentShader,
+      uniforms,
+      transparent: true,
+      depthWrite: false
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // mouse interaction
+    function onPointerMove(e){
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = (e.clientX - rect.left);
+      const y = (rect.bottom - e.clientY); // flip Y so origin bottom-left like shader convenience
+      uniforms.u_mouse.value.set(x, y);
+    }
+    window.addEventListener('pointermove', onPointerMove);
+
+    function onResize(){
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w,h);
+      uniforms.u_resolution.value.set(w, h);
+    }
+    window.addEventListener('resize', onResize, {passive:true});
+
+    // render loop
+    const clock = new THREE.Clock();
+    function animate(){
+      uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Expose material intensity control for tuning (optional)
+    window._flameUniforms = uniforms;
+  })();
+  </script>
+
+  <!-- FullPage init (no right-side dots) & skill animation -->
+  <script>
+    // single fullpage init - navigation:false removes the dots
+    new fullpage('#fullpage', {
+      anchors: ['home','about','skills','projects','publications','contact'],
+      navigation: false,
+      scrollingSpeed: 700,
+      fitToSection: true,
+      responsiveWidth: 900,
+      onLeave: function(origin, destination, direction){
+        // lazy: we animate skills when user arrives on the Skills page
+        if(destination.anchor === 'skills'){
+          gsap.to('#fill1', {width:'95%', duration:1.3, ease:'power2.out'});
+          gsap.to('#val1', {innerText:95, duration:1.3, snap:{innerText:1}});
+          gsap.to('#fill2', {width:'90%', duration:1.3, ease:'power2.out'});
+          gsap.to('#val2', {innerText:90, duration:1.3, snap:{innerText:1}});
+          gsap.to('#fill3', {width:'85%', duration:1.3, ease:'power2.out'});
+          gsap.to('#val3', {innerText:85, duration:1.3, snap:{innerText:1}});
+          gsap.to('#fill4', {width:'80%', duration:1.3, ease:'power2.out'});
+          gsap.to('#val4', {innerText:80, duration:1.3, snap:{innerText:1}});
         }
-        flameEffect();
-    </script>
+      }
+    });
 
-    <!-- FullPage Init + Skills Animation -->
-    <script>
-        new fullpage('#fullpage', {
-            anchors: ['home', 'about', 'skills', 'projects', 'publications', 'contact'],
-            navigation: true,
-            navigationPosition: 'right',
-            scrollingSpeed: 900,
-            easing: 'easeInOutCubic',
-            responsiveWidth: 900,
-            autoScrolling: true,
-            fitToSection: true,
-            afterLoad: function(origin, destination){
-                if(destination.anchor === 'skills') {
-                    gsap.to("#skill1", { width: "95%", duration: 1 });
-                    gsap.to("#skill2", { width: "90%", duration: 1 });
-                    gsap.to("#skill3", { width: "85%", duration: 1 });
-                    gsap.to("#skill4", { width: "80%", duration: 1 });
-                }
-            }
-        });
-    </script>
+    // small helper to animate hero headline on first load
+    gsap.from('#hero-name', {opacity:0, y:12, duration:0.9, ease:'power3.out'});
+    gsap.from('#hero-tag', {opacity:0, y:10, duration:1.0, delay:0.15, ease:'power3.out'});
+
+    // Make nav slightly darker on scroll (visual polish)
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if(window.scrollY > 10) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    });
+  </script>
 
 </body>
 </html>
