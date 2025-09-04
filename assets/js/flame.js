@@ -1,62 +1,95 @@
 const canvas = document.getElementById("flameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Resize canvas to Hero section
-function resizeCanvas() {
-    canvas.width = canvas.parentElement.offsetWidth;
-    canvas.height = canvas.parentElement.offsetHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-// Flame particles
 const flames = [];
 const colors = ["#ff4000", "#ff7300", "#ffaa00", "#ffdd55"];
 
+let mouse = {
+  x: undefined,
+  y: undefined,
+  radius: 150 // Influence area for turbulence
+};
+
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.x;
+  mouse.y = e.y;
+});
+
 class Flame {
-    constructor() {
-        this.reset();
+  constructor() {
+    this.reset();
+  }
+
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + 10;
+    this.size = Math.random() * 10 + 3;
+    this.speedY = Math.random() * 3 + 2;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.alpha = Math.random() * 0.5 + 0.5;
+  }
+
+  update() {
+    // Add turbulence near mouse
+    let dx = this.x - mouse.x;
+    let dy = this.y - mouse.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < mouse.radius) {
+      // Push flame away from cursor
+      this.x += dx / distance * 3;
+      this.y += dy / distance * 3;
     }
 
-    reset() {
-        this.x = canvas.width / 2 + (Math.random() - 0.5) * 200; // centered spread
-        this.y = canvas.height + 10;
-        this.size = Math.random() * 8 + 2;
-        this.speedY = Math.random() * 2 + 1.5;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.alpha = Math.random() * 0.5 + 0.5;
-        this.alphaDecay = Math.random() * 0.01 + 0.005;
-    }
+    // Normal upward flame motion
+    this.y -= this.speedY;
+    this.x += this.speedX;
 
-    update() {
-        this.y -= this.speedY;
-        this.alpha -= this.alphaDecay;
-        if (this.alpha <= 0) this.reset();
-    }
+    // Fade effect
+    this.alpha -= 0.006;
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.alpha;
-        ctx.fill();
-        ctx.globalAlpha = 1;
+    // Reset when out of bounds
+    if (this.y <= 0 || this.alpha <= 0) {
+      this.reset();
     }
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 25;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
 }
 
-// Create initial flames
-function createFlames(count = 200) {
-    for (let i = 0; i < count; i++) flames.push(new Flame());
+function createFlames() {
+  for (let i = 0; i < 220; i++) {
+    flames.push(new Flame());
+  }
 }
 createFlames();
 
-// Animate flames
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    flames.forEach(f => {
-        f.update();
-        f.draw();
-    });
-    requestAnimationFrame(animate);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  flames.forEach((flame) => {
+    flame.update();
+    flame.draw();
+  });
+  requestAnimationFrame(animate);
 }
+
 animate();
+
+// Handle window resizing
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
