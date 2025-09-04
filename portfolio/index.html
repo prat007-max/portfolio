@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pratik Tiwari — Portfolio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pratik Tiwari — Portfolio</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
-  <!-- fullPage.js -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" rel="stylesheet" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/flame.css" />
+</head>
 
-  <!-- Custom CSS (your files) -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/flame.css" />
+<body class="bg-black text-white">
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center">
+        <!-- Flame Canvas -->
+        <canvas id="flame-canvas" class="absolute inset-0"></canvas>
 
-  <!-- Small overrides to keep effects inside the hero and stack correctly -->
-  <style>
-    .glass {
-      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .card { border-radius: 1rem; }
-    .brand { color: #16a34a; }
-    .brand-bg { background: #16a34a; }
-    .nav-item { position: relative; padding-bottom: 4px; transition: color .25s ease; }
-    .nav-item::after {
-      content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
-      background: #16a34a; transition: width .25s ease;
-    }
-    .nav-item:hover { color: #16a34a; }
-    .nav-item:hover::after { width: 100%; }
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col items-center text-center">
+            <img src="assets/img/portrait.jpg" alt="Pratik Tiwari"
+                 class="rounded-full shadow-lg w-48 h-48 mb-6" />
 
-    /* Ensure visuals only affect the hero */
-    #hero #flameCanvas { position: absolute !important; inset: 0; }
-    #particles-js { position:absolute; inset:0; z-index:1; pointer-events:none; }
-  </style>
+            <h1 class="text-4xl font-bold">Pratik Tiwari</h1>
+            <p class="mt-2 text-lg">Combustion Systems Engineer | CFD Specialist | Researcher</p>
+
+            <div class="mt-5 flex gap-4">
+                <a href="files/Pratik_Tiwari_CV.pdf"
+                   class="px-6 py-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition">
+                   Download CV
+                </a>
+                <a href="#contact"
+                   class="px-6 py-2 rounded-full bg-gray-700 hover:bg-gray-800 transition">
+                   Let's Connect
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flame JS -->
+    <script src="assets/js/flame.js"></script>
+</body>
+</html>
+
 </head>
 
 <body class="bg-white text-gray-900 selection:bg-green-200 selection:text-green-900">
