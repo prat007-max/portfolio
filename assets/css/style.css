@@ -1,10 +1,91 @@
-#particles-js {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* Behind the hero content */
-    background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
-    pointer-events: none; /* So it won't block clicks */
+/* ===== Global Styling ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
+
+body {
+  background: #0c0f1a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ===== Hero Section ===== */
+#hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#flameCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 255, 150, 0.6);
+  margin-bottom: 15px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero-content span {
+  color: #00ffaa;
+}
+
+.scroll-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #00ffaa;
+  color: #000;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.scroll-btn:hover {
+  background: #00cc88;
+}
+
+/* About Section */
+#about {
+  height: 100vh;
+  padding: 80px;
+  background: #121526;
+  color: #fff;
+}
+#flameCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;  /* Keep behind content */
+  display: block;
+  background: transparent;
+}
+

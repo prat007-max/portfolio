@@ -1,181 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pratik Tiwari — Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pratik Tiwari | Research Portfolio</title>
 
-  <!-- Tailwind (for quick utilities) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Locomotive Scroll -->
+  <link rel="stylesheet" href="libs/locomotive-scroll.css" />
 
-  <!-- Font Awesome icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-scroll-container>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-bar">
-      <div class="nav-title">Pratik Tiwari</div>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#publications">Publications</a>
-      <a href="#contact">Contact</a>
-      <div style="margin-left:8px;display:flex;align-items:center">
-        <button id="themeToggle" class="toggle-btn" title="Toggle dark / light">🌙</button>
-      </div>
+  <!-- Hero Section -->
+  <section id="hero" data-scroll-section>
+    <canvas id="flameCanvas"></canvas>
+    <div class="hero-content">
+      <img src="/assets/images/pratik.jpg" alt="Pratik" class="profile-pic" />
+      <h1>Hi, I'm <span>Pratik Tiwari</span></h1>
+      <p>Combustion Systems | CFD | High-Performance Propulsion</p>
+      <a href="#about" class="scroll-btn">Explore My Work ↓</a>
     </div>
-  </nav>
+  </section>
 
-  <!-- SCROLL CONTAINER -->
-  <main id="scroll-container" data-scroll-container>
+  <!-- Placeholder for Next Sections -->
+  <section id="about" data-scroll-section>
+    <h2>About Me</h2>
+    <p>This is where your education, awards, and research background will go.</p>
+  </section>
 
-    <!-- HERO -->
-    <section id="home" class="section">
-      <canvas id="flame"></canvas>
-
-      <div class="hero-wrap">
-        <div class="hero-left">
-          <h1 class="hero-title">Hi — I'm <span class="accent">Pratik</span>.</h1>
-          <p class="hero-sub">Combustion systems engineer · CFD & diagnostics · propulsion test & automation</p>
-
-          <div class="cta flex gap-3 mt-6">
-            <a href="files/Pratik_Tiwari_CV.pdf" class="btn-magnetic">Download CV</a>
-            <a href="https://linkedin.com/in/pratik" target="_blank" class="btn-magnetic"><i class="fab fa-linkedin"></i></a>
-            <a href="https://scholar.google.com" target="_blank" class="btn-magnetic"><i class="fas fa-graduation-cap"></i></a>
-            <a href="https://github.com" target="_blank" class="btn-magnetic"><i class="fab fa-github"></i></a>
-            <a href="https://instagram.com" target="_blank" class="btn-magnetic"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <img src="assets/img/portrait.jpg" alt="Pratik portrait" class="portrait">
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-grid">
-        <div>
-          <h3 class="subhead">Education</h3>
-          <ul>
-            <li>MS Aerospace, UT Space Institute, 2024</li>
-            <li>ME Aerospace Propulsion, NUAA, 2020</li>
-            <li>B.Tech Aerospace, SRM, 2015</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="subhead">Awards & Experience</h3>
-          <ul>
-            <li>Best Graduate Researcher — UTSI</li>
-            <li>Top Thesis Award — NUAA</li>
-            <li>Experimental propulsion test & diagnostics</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-item" data-skill="95">
-          <div class="skill-label"><span>Combustion & Propulsion Systems</span><span class="skill-percent">0%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-value="95"></div></div>
-        </div>
-        <div class="skill-item" data-skill="90">
-          <div class="skill-label"><span>CFD & Turbulence Modeling</span><span class="skill-percent">0%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-value="90"></div></div>
-        </div>
-        <div class="skill-item" data-skill="85">
-          <div class="skill-label"><span>Testing & Diagnostics</span><span class="skill-percent">0%</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-value="85"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="section">
-      <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="assets/img/project1.jpg" alt="Project 1" class="project-thumb">
-              <h3>Hydrogen Combustion Study</h3>
-            </div>
-            <div class="flip-card-back">
-              <p>High-fidelity CFD & experimental validation on hydrogen flames.</p>
-              <a class="btn-magnetic" href="#">View More</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="assets/img/project2.jpg" alt="Project 2" class="project-thumb">
-              <h3>Ammonia Ignition Research</h3>
-            </div>
-            <div class="flip-card-back">
-              <p>High-speed diagnostics & ignition stability study.</p>
-              <a class="btn-magnetic" href="#">View More</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PUBLICATIONS -->
-    <section id="publications" class="section">
-      <h2 class="section-title">Publications</h2>
-      <div class="pub-grid">
-        <div class="pub-card">
-          <h4>VLES vs LES Turbulence Modeling</h4>
-          <p>Journal of Applied Fluid Mechanics, 2020.</p>
-        </div>
-        <div class="pub-card">
-          <h4>Ignition Characteristics of Hydrogen/Air Flames</h4>
-          <p>ASME Turbo-Expo, 2024.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <h2 class="section-title">Contact</h2>
-      <div class="contact-wrapper">
-        <p class="contact-text">Let's connect — choose a platform:</p>
-        <div class="cta flex gap-3">
-          <a href="mailto:ptiwari4@vols.utk.edu" class="btn-magnetic"><i class="fas fa-envelope"></i></a>
-          <a href="https://linkedin.com/in/pratik" class="btn-magnetic" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="https://scholar.google.com" class="btn-magnetic" target="_blank"><i class="fas fa-graduation-cap"></i></a>
-          <a href="https://github.com" class="btn-magnetic" target="_blank"><i class="fab fa-github"></i></a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- external libs (loaded first) -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.2.2/dist/locomotive-scroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <!-- our modular scripts (order matters) -->
-  <script src="js/scroll.js"></script>    <!-- initializes Locomotive & ScrollTrigger first -->
-  <script src="js/hero.js"></script>      <!-- hero flame (uses loco via window.locoScroll optionally) -->
-  <script src="js/projects.js"></script>
-  <script src="js/skills.js"></script>
-  <script src="js/theme.js"></script>
-
+  <!-- Scripts -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/gsap.min.js"></script>
+  <script src="libs/locomotive-scroll.min.js"></script>
+  <script src="assets/js/scroll.js"></script>
+  <script src="assets/js/hero.js"></script>
 </body>
 </html>
