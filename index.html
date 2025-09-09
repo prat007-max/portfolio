@@ -1,260 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pratik Tiwari | Research Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratik Tiwari — Portfolio</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind (for quick utilities) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- Three.js for combustion shader -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #1f2937;
-    }
-
-    /* Home Section Shader Canvas */
-    #flameCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    /* Timeline Styling */
-    .timeline {
-      position: relative;
-      padding-left: 40px;
-      margin-top: 2rem;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 15px;
-      width: 3px;
-      height: 100%;
-      background: #10b981;
-    }
-
-    .timeline-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      transform: translateX(-40px);
-      opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-    }
-
-    .timeline-card.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  </style>
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3">
-      <h1 class="text-xl font-bold text-green-600">Pratik Tiwari</h1>
-      <nav class="hidden md:flex gap-6 text-gray-700 font-medium">
-        <a href="#hero" class="hover:text-green-600">Home</a>
-        <a href="#about" class="hover:text-green-600">About</a>
-        <a href="#skills" class="hover:text-green-600">Skills</a>
-        <a href="#projects" class="hover:text-green-600">Projects</a>
-        <a href="#publications" class="hover:text-green-600">Publications</a>
-        <a href="#contact" class="hover:text-green-600">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="h-screen flex flex-col justify-center items-center text-center relative">
-    <canvas id="flameCanvas"></canvas>
-    <h1 id="name" class="text-5xl font-bold text-gray-900 drop-shadow-lg">Hi, I'm Pratik Tiwari</h1>
-    <p class="mt-4 text-lg text-gray-700">Combustion Systems Engineer | Propulsion Researcher</p>
-  </section>
-
-  <!-- ABOUT (EDUCATION TIMELINE) -->
-  <section id="about" class="section py-24 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-green-600">Education Journey</h2>
-      <div class="timeline">
-        <div class="timeline-card">
-          <h3 class="text-xl font-semibold">Master of Science | Aerospace Engineering</h3>
-          <p class="text-gray-700">University of Tennessee Space Institute (2022 - 2024)</p>
-          <p class="text-sm mt-2">Specialization: Combustion Systems & Hydrogen Flame Dynamics</p>
-        </div>
-        <div class="timeline-card">
-          <h3 class="text-xl font-semibold">Master of Engineering | Aerospace Propulsion</h3>
-          <p class="text-gray-700">Nanjing University of Aeronautics and Astronautics (2017 - 2020)</p>
-          <p class="text-sm mt-2">Thesis: LES/VLES Modeling of Swirling Flames</p>
-        </div>
-        <div class="timeline-card">
-          <h3 class="text-xl font-semibold">Bachelor of Technology | Aerospace Engineering</h3>
-          <p class="text-gray-700">SRM University, Chennai (2011 - 2015)</p>
-          <p class="text-sm mt-2">Graduated with Honors in Propulsion Systems</p>
-        </div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-bar">
+      <div class="nav-title">Pratik Tiwari</div>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+      <div style="margin-left:8px;display:flex;align-items:center">
+        <button id="themeToggle" class="toggle-btn" title="Toggle dark / light">🌙</button>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- SKILLS SECTION -->
-  <section id="skills" class="section py-24 bg-white">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-green-600">Professional Skills</h2>
-      <div class="mt-6 space-y-6">
-        <div>
-          <p class="text-gray-700">Combustion & Propulsion Systems</p>
-          <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
-            <div id="skill1" class="bg-green-600 h-4 rounded-full" style="width:0%"></div>
+  <!-- SCROLL CONTAINER -->
+  <main id="scroll-container" data-scroll-container>
+
+    <!-- HERO -->
+    <section id="home" class="section">
+      <canvas id="flame"></canvas>
+
+      <div class="hero-wrap">
+        <div class="hero-left">
+          <h1 class="hero-title">Hi — I'm <span class="accent">Pratik</span>.</h1>
+          <p class="hero-sub">Combustion systems engineer · CFD & diagnostics · propulsion test & automation</p>
+
+          <div class="cta flex gap-3 mt-6">
+            <a href="files/Pratik_Tiwari_CV.pdf" class="btn-magnetic">Download CV</a>
+            <a href="https://linkedin.com/in/pratik" target="_blank" class="btn-magnetic"><i class="fab fa-linkedin"></i></a>
+            <a href="https://scholar.google.com" target="_blank" class="btn-magnetic"><i class="fas fa-graduation-cap"></i></a>
+            <a href="https://github.com" target="_blank" class="btn-magnetic"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com" target="_blank" class="btn-magnetic"><i class="fab fa-instagram"></i></a>
           </div>
-          <span id="skill1-val" class="text-sm font-semibold">0%</span>
         </div>
-        <div>
-          <p class="text-gray-700">CFD Modeling & Simulation</p>
-          <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
-            <div id="skill2" class="bg-green-600 h-4 rounded-full" style="width:0%"></div>
-          </div>
-          <span id="skill2-val" class="text-sm font-semibold">0%</span>
-        </div>
-        <div>
-          <p class="text-gray-700">High-Speed Laser Diagnostics</p>
-          <div class="w-full bg-gray-200 rounded-full h-4 mt-1">
-            <div id="skill3" class="bg-green-600 h-4 rounded-full" style="width:0%"></div>
-          </div>
-          <span id="skill3-val" class="text-sm font-semibold">0%</span>
+
+        <div class="hero-right">
+          <img src="assets/img/portrait.jpg" alt="Pratik portrait" class="portrait">
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT SECTION -->
-  <section id="contact" class="section py-24 bg-gradient-to-b from-green-50 to-white">
-    <div class="max-w-xl mx-auto text-center px-6">
-      <h2 class="text-3xl font-bold text-green-600">Let's Collaborate 🚀</h2>
-      <p class="mt-2 text-gray-600">Looking forward to connecting with researchers and innovators in combustion & propulsion!</p>
-      <div class="mt-6">
-        <a href="mailto:ptiwari4@vols.utk.edu" class="bg-green-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-green-700 transition">Contact Me</a>
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div>
+          <h3 class="subhead">Education</h3>
+          <ul>
+            <li>MS Aerospace, UT Space Institute, 2024</li>
+            <li>ME Aerospace Propulsion, NUAA, 2020</li>
+            <li>B.Tech Aerospace, SRM, 2015</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="subhead">Awards & Experience</h3>
+          <ul>
+            <li>Best Graduate Researcher — UTSI</li>
+            <li>Top Thesis Award — NUAA</li>
+            <li>Experimental propulsion test & diagnostics</li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <script>
-    // GSAP Animations for Timeline Cards
-    gsap.utils.toArray(".timeline-card").forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none none"
-        },
-        opacity: 0,
-        x: -40,
-        duration: 0.6,
-        delay: i * 0.15,
-        ease: "power2.out"
-      });
-    });
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item" data-skill="95">
+          <div class="skill-label"><span>Combustion & Propulsion Systems</span><span class="skill-percent">0%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-value="95"></div></div>
+        </div>
+        <div class="skill-item" data-skill="90">
+          <div class="skill-label"><span>CFD & Turbulence Modeling</span><span class="skill-percent">0%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-value="90"></div></div>
+        </div>
+        <div class="skill-item" data-skill="85">
+          <div class="skill-label"><span>Testing & Diagnostics</span><span class="skill-percent">0%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-value="85"></div></div>
+        </div>
+      </div>
+    </section>
 
-    // Animate Skill Bars
-    function animateSkill(id, valueId, percent) {
-      gsap.to(id, {
-        width: percent + "%",
-        duration: 1.5,
-        ease: "power2.out"
-      });
-      gsap.to(valueId, {
-        innerHTML: percent + "%",
-        duration: 1.5,
-        ease: "power2.out"
-      });
-    }
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="assets/img/project1.jpg" alt="Project 1" class="project-thumb">
+              <h3>Hydrogen Combustion Study</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>High-fidelity CFD & experimental validation on hydrogen flames.</p>
+              <a class="btn-magnetic" href="#">View More</a>
+            </div>
+          </div>
+        </div>
 
-    ScrollTrigger.create({
-      trigger: "#skills",
-      start: "top 80%",
-      once: true,
-      onEnter: () => {
-        animateSkill("#skill1", "#skill1-val", 95);
-        animateSkill("#skill2", "#skill2-val", 90);
-        animateSkill("#skill3", "#skill3-val", 85);
-      }
-    });
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="assets/img/project2.jpg" alt="Project 2" class="project-thumb">
+              <h3>Ammonia Ignition Research</h3>
+            </div>
+            <div class="flip-card-back">
+              <p>High-speed diagnostics & ignition stability study.</p>
+              <a class="btn-magnetic" href="#">View More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    // THREE.JS Flame Shader with Bloom Effect
-    const canvas = document.getElementById("flameCanvas");
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section">
+      <h2 class="section-title">Publications</h2>
+      <div class="pub-grid">
+        <div class="pub-card">
+          <h4>VLES vs LES Turbulence Modeling</h4>
+          <p>Journal of Applied Fluid Mechanics, 2020.</p>
+        </div>
+        <div class="pub-card">
+          <h4>Ignition Characteristics of Hydrogen/Air Flames</h4>
+          <p>ASME Turbo-Expo, 2024.</p>
+        </div>
+      </div>
+    </section>
 
-    const geometry = new THREE.PlaneGeometry(4, 4, 32, 32);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0.0 }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        varying vec2 vUv;
-        uniform float time;
-        void main() {
-          float strength = smoothstep(0.4, 0.9, sin(vUv.y*10.0 + time*3.0));
-          vec3 color = mix(vec3(0.05,0.0,0.0), vec3(1.0,0.3,0.0), strength);
-          color += 0.3 * smoothstep(0.5, 1.0, strength);
-          gl_FragColor = vec4(color, strength);
-        }
-      `,
-      transparent: true
-    });
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-wrapper">
+        <p class="contact-text">Let's connect — choose a platform:</p>
+        <div class="cta flex gap-3">
+          <a href="mailto:ptiwari4@vols.utk.edu" class="btn-magnetic"><i class="fas fa-envelope"></i></a>
+          <a href="https://linkedin.com/in/pratik" class="btn-magnetic" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://scholar.google.com" class="btn-magnetic" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://github.com" class="btn-magnetic" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </section>
 
-    const plane = new THREE.Mesh(geometry, material);
-    scene.add(plane);
+  </main>
 
-    camera.position.z = 3;
+  <!-- external libs (loaded first) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.2.2/dist/locomotive-scroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    // Post-processing composer
-    const composer = new THREE.EffectComposer(renderer);
-    const renderPass = new THREE.RenderPass(scene, camera);
-    composer.addPass(renderPass);
+  <!-- our modular scripts (order matters) -->
+  <script src="js/scroll.js"></script>    <!-- initializes Locomotive & ScrollTrigger first -->
+  <script src="js/hero.js"></script>      <!-- hero flame (uses loco via window.locoScroll optionally) -->
+  <script src="js/projects.js"></script>
+  <script src="js/skills.js"></script>
+  <script src="js/theme.js"></script>
 
-    const bloomPass = new THREE.UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.5, 0.4, 0.85
-    );
-    composer.addPass(bloomPass);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      material.uniforms.time.value += 0.03;
-      composer.render();
-    }
-    animate();
-  </script>
 </body>
 </html>
