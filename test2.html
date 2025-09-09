@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratik Tiwari — Portfolio (Advanced)</title>
+
+  <!-- Tailwind for rapid prototyping -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ---------- THEME / LAYOUT ---------- */
+    :root{
+      --brand: #10b981;
+      --bg-dark: #071021;
+      --bg-light: #f7fafc;
+      --glass: rgba(255,255,255,0.04);
+      --max-width: 1200px;
+    }
+    html,body{height:100%;margin:0;background:var(--bg-dark);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#e6eef6;overflow-x:hidden}
+    nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:120;pointer-events:auto}
+    .nav-bar{display:flex;gap:14px;padding:10px 16px;background:rgba(255,255,255,0.03);backdrop-filter:blur(8px);border-radius:14px;align-items:center}
+    .nav-title{font-weight:800;color:#f8fafc;margin-right:8px}
+    .nav-bar a{color:#eef2ff;text-decoration:none;font-weight:600}
+    .nav-bar a:focus{outline:2px dashed rgba(255,255,255,0.12);outline-offset:3px}
+    .toggle-btn{margin-left:12px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.03);cursor:pointer}
+    .section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:64px 28px;position:relative;overflow:hidden}
+    canvas#flame{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
+    .wrap{position:relative;z-index:8;max-width:var(--max-width);width:100%}
+
+    /* HERO */
+    .hero{display:flex;gap:36px;align-items:center}
+    .hero-left{flex:1}
+    .hero-right{width:280px;flex:0 0 280px}
+    .portrait{width:100%;height:280px;border-radius:18px;object-fit:cover;border:4px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(16,185,129,0.06)}
+    .cta{display:flex;gap:12px;margin-top:18px;align-items:center}
+
+    /* MAGNETIC BUTTONS */
+    .magnetic{display:inline-block;cursor:pointer;transform:translateZ(0);will-change:transform}
+    .btn-magnetic{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;background:linear-gradient(90deg,var(--brand),#059669);color:#012018;font-weight:800;box-shadow:0 12px 36px rgba(16,185,129,0.12);border:none}
+
+    /* TIMELINE */
+    .timeline{position:relative;padding-left:46px;margin-top:2rem}
+    .timeline::before{content:"";position:absolute;left:22px;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--brand),#059669)}
+    .timeline-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(8px);border-radius:12px;padding:16px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.04);transform:translateX(-36px);opacity:0}
+
+    /* SKILLS */
+    .skill-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .skill-bar{flex:1;height:12px;border-radius:999px;background:#0b1220;overflow:hidden;margin-left:12px}
+    .skill-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--brand),#059669);transform-origin:left center}
+
+    /* PROJECTS GRID - responsive */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:18px}
+    @media (max-width:1000px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .projects-grid{grid-template-columns:1fr} .hero{flex-direction:column;align-items:center;text-align:center} nav{left:12px;transform:none} .hero-right{width:200px} }
+
+    .project-card{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:18px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.04)}
+    .project-visual{height:120px;border-radius:10px;background:#072038;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-weight:700}
+
+    /* publications */
+    .pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:1000px){ .pub-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .pub-grid{grid-template-columns:1fr} }
+
+    /* contact card */
+    .contact-wrapper{position:relative;max-width:720px;margin:0 auto;padding:36px;border-radius:14px;background:rgba(255,255,255,0.94);color:#042023;box-shadow:0 12px 40px rgba(2,6,23,0.08)}
+
+    /* accessibility helper */
+    @media (prefers-reduced-motion: reduce){
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-bar" role="navigation" aria-label="Main">
+      <div class="nav-title">Pratik Tiwari</div>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+      <div style="margin-left:8px;display:flex;align-items:center">
+        <button id="themeToggle" class="toggle-btn mode-toggle" aria-pressed="false" title="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="fullpage">
+    <!-- HERO -->
+    <section id="home" class="section" aria-label="Home">
+      <canvas id="flame" aria-hidden="true"></canvas>
+      <div class="wrap">
+        <div class="hero">
+          <div class="hero-left">
+            <h1 class="text-4xl md:text-5xl font-extrabold">Hi — I'm <span style="color:var(--brand)">Pratik</span>.</h1>
+            <p class="muted mt-4 max-w-xl">Combustion systems engineer · CFD & diagnostics · propulsion test & automation</p>
+            <div class="cta" aria-hidden="false">
+              <a class="magnetic btn-magnetic" href="files/Pratik_Tiwari_CV.pdf" data-aria="Download CV">
+                <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="#012018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#012018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#012018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Download CV
+              </a>
+              <button class="magnetic" id="connectBtn" aria-haspopup="dialog">Let's Connect</button>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <img class="portrait" loading="lazy" alt="Pratik portrait" src="assets/img/portrait.jpg" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-label="About">
+      <div class="wrap">
+        <h2 class="text-3xl font-extrabold mb-4">About</h2>
+        <p class="muted max-w-3xl">I design and test high-performance combustion systems for aerospace and energy — experiments, diagnostics, CFD, and test automation.</p>
+
+        <div class="timeline" id="timeline">
+          <div class="timeline-card" data-anim="slide-left">
+            <div class="text-sm muted">Dec 2024</div>
+            <div class="font-semibold">MS — Aerospace Engineering</div>
+            <div class="muted">University of Tennessee Space Institute</div>
+          </div>
+          <div class="timeline-card" data-anim="slide-left">
+            <div class="text-sm muted">Apr 2020</div>
+            <div class="font-semibold">MEng — Propulsion</div>
+            <div class="muted">NUAA, China</div>
+          </div>
+          <div class="timeline-card" data-anim="slide-left">
+            <div class="text-sm muted">Nov 2015</div>
+            <div class="font-semibold">BTech — Aerospace Engineering</div>
+            <div class="muted">SRM University, Chennai</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section" aria-label="Skills">
+      <div class="wrap">
+        <h2 class="text-3xl font-extrabold mb-4">Skills</h2>
+        <div class="mb-6 skill-row">
+          <div>Propulsion & Gas Turbine Systems</div>
+          <div class="skill-val">90%</div>
+        </div>
+        <div class="skill-bar" aria-hidden="true"><div class="skill-fill" data-fill="90%"></div></div>
+
+        <div class="mb-6 skill-row mt-6">
+          <div>CFD (ANSYS Fluent / OpenFOAM)</div>
+          <div class="skill-val">85%</div>
+        </div>
+        <div class="skill-bar" aria-hidden="true"><div class="skill-fill" data-fill="85%"></div></div>
+
+        <div class="mb-6 skill-row mt-6">
+          <div>Testing & Diagnostics</div>
+          <div class="skill-val">92%</div>
+        </div>
+        <div class="skill-bar" aria-hidden="true"><div class="skill-fill" data-fill="92%"></div></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" aria-label="Projects">
+      <div class="wrap">
+        <h2 class="text-3xl font-extrabold mb-6">Selected Projects</h2>
+
+        <div class="projects-grid">
+          <!-- CARD A: Flip animation -->
+          <article class="project-card" data-anim="flip" tabindex="0" aria-label="Injector design project">
+            <div class="project-visual">Injector design</div>
+            <div>
+              <div class="font-semibold mt-4">High-pressure hydrogen injector</div>
+              <p class="muted mt-2">Design, build and validation of swirl injector and ignition mapping.</p>
+            </div>
+          </article>
+
+          <!-- CARD B: Zoom + parallax -->
+          <article class="project-card" data-anim="zoom" tabindex="0" aria-label="Ammonia GDI study">
+            <div class="project-visual">Ammonia SI GDI</div>
+            <div>
+              <div class="font-semibold mt-4">Ammonia SI GDI study</div>
+              <p class="muted mt-2">High-speed diagnostics and fuel reactivity mapping.</p>
+            </div>
+          </article>
+
+          <!-- CARD C: Slide-up with staggered highlights -->
+          <article class="project-card" data-anim="slide-up" tabindex="0" aria-label="Automation project">
+            <div class="project-visual">Automation & Data</div>
+            <div>
+              <div class="font-semibold mt-4">Test automation suite</div>
+              <p class="muted mt-2">DAQ scripting, automated post-processing, and automated reporting.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section" aria-label="Publications">
+      <div class="wrap">
+        <h2 class="text-3xl font-extrabold mb-6">Publications</h2>
+        <div class="pub-grid">
+          <div class="p-4 rounded-lg bg-white/5">
+            <div class="font-semibold">Comparison of VLES and LES Turbulence Modeling</div>
+            <div class="muted text-sm mt-1">Journal of Applied Fluid Mechanics, 2020</div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/5">
+            <div class="font-semibold">Ignition Characteristics of Hydrogen/Air</div>
+            <div class="muted text-sm mt-1">ASME Turbo-Expo, 2024</div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/5">
+            <div class="font-semibold">Other Work</div>
+            <div class="muted text-sm mt-1">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-label="Contact">
+      <div class="wrap">
+        <div class="contact-wrapper" role="form" aria-label="Contact form">
+          <h3 class="text-2xl font-semibold">Contact</h3>
+          <p class="muted mb-4">Want to collaborate or see the full CV? Drop a message.</p>
+          <form id="contactForm">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <input required placeholder="Name" name="name" class="p-3 rounded border" />
+              <input required placeholder="Email" name="email" class="p-3 rounded border" />
+            </div>
+            <textarea required placeholder="Message" name="message" class="p-3 rounded border mt-4 w-full" rows="6"></textarea>
+            <div class="mt-4">
+              <button type="submit" class="btn-magnetic magnetic">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ------------------- SCRIPT: SHADER + UI + GSAP ------------------- -->
+  <script>
+  /* -------------------- Prefers-reduced-motion guard -------------------- */
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* -------------------- Flame shader (Three.js) - robust init + perf -------------------- */
+  (function FlameShader(){
+    const canvas = document.getElementById('flame');
+    if(!canvas || reducedMotion) { canvas && (canvas.style.display = 'none'); return; }
+
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(DPR);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+    const geometry = new THREE.PlaneGeometry(2,2);
+
+    const uniforms = {
+      u_time: { value: 0.0 },
+      u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      u_mouse: { value: new THREE.Vector2(-9999,-9999) },
+      u_intensity: { value: 1.0 },
+      u_pause: { value: 0.0 }
+    };
+
+    const frag = `precision highp float;
+    uniform vec2 u_resolution; uniform float u_time; uniform vec2 u_mouse; uniform float u_intensity; uniform float u_pause;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
+    float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);vec2 u=f*f*(3.0-2.0*f);float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+    float fbm(vec2 p){float v=0.0;float a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}
+    void main(){ if(u_pause>0.5){ gl_FragColor = vec4(0.0); return; }
+      vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+      vec2 pos = uv - 0.5; pos.x *= u_resolution.x/u_resolution.y;
+      float t = u_time * 0.6;
+      float core = smoothstep(0.2,0.92,1.0 - (pos.y + 0.5)*1.6);
+      float n = fbm(vec2(pos.x*2.0, pos.y*3.0 - t*0.8));
+      float flameshape = core * (0.5 + 0.8*n);
+      float radial = smoothstep(0.9,0.2,length(pos.xy*vec2(1.0,0.9)));
+      float intensity = clamp(flameshape * radial, 0.0,1.0);
+      float smoke = fbm(vec2(pos.x*0.8, pos.y*1.2 - t*0.25));
+      smoke = smoothstep(0.2,0.8,smoke);
+      vec3 hot = vec3(1.0,0.96,0.8);
+      vec3 yellow = vec3(1.0,0.7,0.14);
+      vec3 orange = vec3(0.98,0.42,0.08);
+      vec3 red = vec3(0.65,0.12,0.03);
+      vec3 smokeCol = vec3(0.06,0.06,0.08);
+      vec3 col = mix(smokeCol, red, intensity);
+      col = mix(col, orange, intensity*0.8);
+      col = mix(col, yellow, intensity*0.5);
+      col = mix(col, hot, intensity*0.25);
+      float flick = 0.12 * noise(vec2(pos.x*5.0 + u_time*0.8, pos.y*3.0));
+      float md = length((gl_FragCoord.xy - u_mouse) / u_resolution.xy);
+      float mouseBoost = exp(-md*6.0);
+      intensity += flick * mouseBoost * 0.6 * u_intensity;
+      float smokeOverlay = smoothstep(0.25, 0.8, smoke) * (1.0 - intensity*0.6);
+      float alpha = clamp(intensity*1.2 + (1.0 - pos.y)*0.2, 0.0, 1.0);
+      vec3 finalCol = mix(vec3(0.02,0.02,0.03), col*(0.6 + intensity*0.8), alpha);
+      finalCol = mix(finalCol, vec3(0.08,0.08,0.09), smokeOverlay*0.6);
+      finalCol = 1.0 - exp(-finalCol * (2.2 * u_intensity));
+      float vignette = smoothstep(0.0, 0.8, 1.0 - length(pos)*1.3);
+      finalCol *= vignette;
+      gl_FragColor = vec4(finalCol, clamp(alpha + (1.0 - smokeOverlay)*0.05, 0.0, 1.0));
+    }`;
+
+    const material = new THREE.ShaderMaterial({ fragmentShader:frag, uniforms, transparent:true, depthWrite:false });
+    const mesh = new THREE.Mesh(geometry, material); scene.add(mesh);
+
+    let then = performance.now();
+    const clock = new THREE.Clock();
+
+    // pointer -> mouse uniform
+    function onPointerMove(e){
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = (e.clientX - rect.left);
+      const y = (rect.bottom - e.clientY);
+      uniforms.u_mouse.value.set(x, y);
+    }
+    window.addEventListener('pointermove', onPointerMove, {passive:true});
+
+    // resize
+    function onResize(){
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h);
+      uniforms.u_resolution.value.set(w, h);
+    }
+    window.addEventListener('resize', debounce(onResize, 180), {passive:true});
+
+    // render loop with pause control for perf
+    let rafId = null, active = true;
+    function render(){
+      uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+      rafId = requestAnimationFrame(render);
+    }
+    render();
+
+    // expose controls for other code
+    window._flame = { uniforms, pause: (p)=> { uniforms.u_pause.value = p?1.0:0.0; } };
+
+    // Pause shader when tab not visible for battery saving
+    document.addEventListener('visibilitychange', ()=> {
+      if(document.hidden){
+        cancelAnimationFrame(rafId); rafId = null; active = false;
+      } else {
+        if(!active){ clock.start(); render(); active = true; }
+      }
+    });
+
+    // helpers
+    function debounce(fn, t){ let to; return function(){ clearTimeout(to); to=setTimeout(fn,t); }; }
+  })();
+
+
+  /* -------------------- UI: fullPage + scroll speed + GSAP animations -------------------- */
+  (function UI(){
+    // Fullpage initialization with controlled speed
+    function initFullpage(){
+      try { if(typeof fullpage_api !== 'undefined') fullpage_api.destroy('all'); } catch(e){}
+      new fullpage('#fullpage', {
+        anchors: ['home','about','skills','projects','publications','contact'],
+        navigation: false,
+        scrollingSpeed: 850,       // tuned -> slower, polished feel
+        easing: 'easeInOutCubic',
+        keyboardScrolling: true,
+        licenseKey: 'OPEN-SOURCE-OK',
+        onLeave: function(origin, destination, direction){
+          // subtle flame pulse when leaving hero
+          if(origin.index === 0 && window._flame) gsap.fromTo(window._flame.uniforms.u_intensity, {value:1.0}, {value:1.6, duration:0.35, yoyo:true, repeat:1});
+          // pause flame when leaving sections that are heavy (contact / publications)
+          if(window._flame) window._flame.pause(destination.index > 3 ? true : false);
+        }
+      });
+    }
+
+    // GSAP Animations: section-level timelines and per-element animations
+    function initGSAP(){
+      gsap.registerPlugin(ScrollTrigger);
+
+      // INTRO hero animation
+      gsap.timeline()
+        .from('#hero-name', { y: 18, opacity:0, duration:0.8, ease:'power3.out' })
+        .from('.muted', { y: 8, opacity:0, duration:0.6, ease:'power2.out' }, '-=0.45')
+        .from('.portrait', { scale: 0.94, opacity:0, duration:0.9, ease:'elastic.out(1,0.6)' }, '-=0.4');
+
+      // timeline reveal
+      gsap.utils.toArray('.timeline-card').forEach((el,i)=>{
+        gsap.fromTo(el, { x:-36, opacity:0 }, {
+          x:0, opacity:1, duration:0.7, delay:i*0.06,
+          scrollTrigger:{ trigger: el, start:'top 82%' }
+        });
+      });
+
+      // skill fills
+      gsap.utils.toArray('.skill-fill').forEach(el=>{
+        const val = el.dataset.fill || '80%';
+        gsap.to(el, {
+          width: val, duration:1.45, ease:'power3.out',
+          scrollTrigger:{ trigger: el, start:'top 88%' }
+        });
+      });
+
+      // per-project animations via data-anim
+      document.querySelectorAll('.project-card').forEach((card, i) => {
+        const anim = card.dataset.anim || 'slide-up';
+        const delay = i*0.08;
+        if(anim === 'flip'){
+          card.style.transformOrigin = 'center';
+          gsap.fromTo(card, { rotationY: -8, opacity:0, y:20 }, { rotationY:0, opacity:1, y:0, duration:0.9, ease:'power2.out', delay, scrollTrigger:{trigger:card,start:'top 90%'}});
+        } else if(anim === 'zoom'){
+          gsap.fromTo(card, { scale:0.92, opacity:0 }, { scale:1, opacity:1, duration:0.9, ease:'power3.out', delay, scrollTrigger:{trigger:card,start:'top 90%'}});
+        } else { // slide-up default
+          gsap.from(card, { y:40, opacity:0, duration:0.8, delay, scrollTrigger:{trigger:card,start:'top 92%'}});
+        }
+      });
+
+      // publications
+      gsap.utils.toArray('.pub-grid > div').forEach((el,i)=>{
+        gsap.from(el, { y: 24, opacity:0, duration:0.7, delay:i*0.05, scrollTrigger:{ trigger: el, start:'top 90%' }});
+      });
+    }
+
+    // Magnetic button with spring physics and inertia
+    function initMagnetics(){
+      const magnets = document.querySelectorAll('.magnetic');
+      magnets.forEach(el=>{
+        // state
+        let last = {x:0,y:0}, vx=0, vy=0;
+        el.style.willChange = 'transform';
+        el.addEventListener('pointermove', (e)=>{
+          const r = el.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width/2));
+          const dy = (e.clientY - (r.top + r.height/2));
+          // apply spring target with GSAP to get natural feel
+          gsap.to(el, { x: dx*0.12, y: dy*0.08, scale:1.03, duration:0.28, ease:'power3.out' });
+        }, {passive:true});
+        el.addEventListener('pointerleave', ()=> gsap.to(el, { x:0, y:0, scale:1, duration:0.5, ease:'elastic.out(1,0.6)' }));
+        // keyboard focus style (accessible)
+        el.addEventListener('focus', ()=> gsap.to(el, { scale:1.02, duration:0.18 }));
+        el.addEventListener('blur', ()=> gsap.to(el, { scale:1, duration:0.18 }));
+      });
+    }
+
+    // Flip / tilt subtle effect for pointermove on .project-card
+    function initProjectTilt(){
+      document.querySelectorAll('.project-card').forEach(card=>{
+        card.addEventListener('pointermove', (e)=>{
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const rx = (py - 0.5) * 6;
+          const ry = (px - 0.5) * -6;
+          gsap.to(card, { rotateX: rx, rotateY: ry, duration:0.28, ease:'power2.out' });
+        }, {passive:true});
+        card.addEventListener('pointerleave', ()=> gsap.to(card, { rotateX:0, rotateY:0, duration:0.5, ease:'power2.out' }));
+      });
+    }
+
+    // theme toggle simple
+    function initThemeToggle(){
+      const toggle = document.getElementById('themeToggle');
+      const root = document.documentElement;
+      function setDark(enabled){
+        if(enabled){
+          root.style.setProperty('--bg-dark','#071021');
+          toggle.textContent = '🌙';
+          toggle.setAttribute('aria-pressed','true');
+          localStorage.setItem('pt_theme','dark');
+        } else {
+          root.style.setProperty('--bg-dark','#f7fafc');
+          toggle.textContent = '🌞';
+          toggle.setAttribute('aria-pressed','false');
+          localStorage.setItem('pt_theme','light');
+        }
+      }
+      const pref = localStorage.getItem('pt_theme') || 'dark';
+      setDark(pref === 'dark');
+      toggle.addEventListener('click', ()=> setDark(localStorage.getItem('pt_theme') !== 'dark'));
+    }
+
+    // contact form placeholder
+    function initContactForm(){
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        gsap.fromTo(form.querySelector('button[type="submit"]') || form.querySelector('button'), {scale:1}, {scale:0.96, duration:0.08, yoyo:true, repeat:1});
+        alert('Thanks, message queued (demo). Hook your server/email service to send real messages.');
+        form.reset();
+      });
+    }
+
+    // nav links -> fullpage movement
+    function initNavLinks(){
+      document.querySelectorAll('nav a').forEach(a=>{
+        a.addEventListener('click', (ev)=>{
+          ev.preventDefault();
+          const anchor = a.getAttribute('href').replace('#','');
+          if(typeof fullpage_api !== 'undefined') fullpage_api.moveTo(anchor);
+        });
+      });
+    }
+
+    // orchestrate
+    window.addEventListener('load', ()=>{
+      initFullpage();
+      initGSAP();
+      initMagnetics();
+      initProjectTilt();
+      initThemeToggle();
+      initContactForm();
+      initNavLinks();
+    });
+
+  })();
+
+  /* -------------------- Accessibility: keyboard & reduced-motion tweaks -------------------- */
+  (function Accessibility(){
+    // allow Enter on project cards to focus content (simple demo)
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('project-card')){
+        // simulate "open" with a micro animation
+        gsap.fromTo(document.activeElement, {scale:1}, {scale:0.98, duration:0.08, yoyo:true, repeat:1});
+      }
+    });
+  })();
+
+  /* -------------------- Utility: debounce -------------------- */
+  function debounce(fn, t){ let tid; return function(){ clearTimeout(tid); tid = setTimeout(fn, t); }; }
+
+  </script>
+
+  <!-- Accessibility: small focus outline -->
+  <style>
+    a:focus, button:focus, input:focus, textarea:focus, .project-card:focus { outline: 3px solid rgba(16,185,129,0.18); outline-offset: 3px; }
+  </style>
+</body>
+</html>

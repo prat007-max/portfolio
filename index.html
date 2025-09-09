@@ -3,39 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Pratik Tiwari | Research Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="libs/gsap.min.js"></script>
+  <script src="libs/ScrollTrigger.min.js"></script>
+  <script src="libs/three.min.js"></script>
 
   <!-- Locomotive Scroll -->
-  <link rel="stylesheet" href="libs/locomotive-scroll.css" />
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
 </head>
-<body data-scroll-container>
 
-  <!-- Hero Section -->
-  <section id="hero" data-scroll-section>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">Pratik Tiwari</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section id="home" class="hero">
     <canvas id="flameCanvas"></canvas>
     <div class="hero-content">
-      <img src="/assets/images/pratik.jpg" alt="Pratik" class="profile-pic" />
       <h1>Hi, I'm <span>Pratik Tiwari</span></h1>
-      <p>Combustion Systems | CFD | High-Performance Propulsion</p>
-      <a href="#about" class="scroll-btn">Explore My Work ↓</a>
+      <p>Combustion Systems Engineer | Researcher | Innovator</p>
+      <a href="#projects" class="btn-primary">Explore My Work</a>
     </div>
   </section>
 
-  <!-- Placeholder for Next Sections -->
-  <section id="about" data-scroll-section>
+  <!-- ================= ABOUT SECTION ================= -->
+  <section id="about" class="about">
     <h2>About Me</h2>
-    <p>This is where your education, awards, and research background will go.</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="education">Education</button>
+      <button class="tab" data-tab="awards">Awards</button>
+      <button class="tab" data-tab="extra">Extra</button>
+    </div>
+    <div class="tab-content" id="education">
+      <ul>
+        <li><strong>M.S.</strong> Aerospace Engineering - UT Space Institute (2024)</li>
+        <li><strong>M.E.</strong> Aerospace Propulsion - NUAA, China (2020)</li>
+        <li><strong>B.Tech</strong> Aerospace Engineering - SRM University (2015)</li>
+      </ul>
+    </div>
+    <div class="tab-content hidden" id="awards">
+      <ul>
+        <li>Best Research Paper — ASME Turbo Expo 2024</li>
+        <li>Graduate Research Fellowship — UT Space Institute</li>
+        <li>Innovation Award — IIT Madras</li>
+      </ul>
+    </div>
+    <div class="tab-content hidden" id="extra">
+      <p>Diploma in Photography • Conference Speaker • Research Mentor</p>
+    </div>
   </section>
 
-  <!-- Scripts -->
-  <script src="libs/three.min.js"></script>
-  <script src="libs/gsap.min.js"></script>
-  <script src="libs/locomotive-scroll.min.js"></script>
-  <script src="assets/js/scroll.js"></script>
-  <script src="assets/js/hero.js"></script>
+  <!-- ================= SKILLS SECTION ================= -->
+  <section id="skills" class="skills">
+    <h2>Technical Skills</h2>
+    <div class="skill-bar" data-skill="CFD Analysis" data-value="95"></div>
+    <div class="skill-bar" data-skill="Combustion Systems" data-value="90"></div>
+    <div class="skill-bar" data-skill="Laser Diagnostics" data-value="85"></div>
+    <div class="skill-bar" data-skill="Python & MATLAB" data-value="88"></div>
+    <div class="skill-bar" data-skill="CAD & Testing" data-value="92"></div>
+  </section>
+
+  <!-- ================= PROJECTS SECTION ================= -->
+  <section id="projects" class="projects">
+    <h2>Highlighted Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="assets/images/project1.jpg" alt="Project 1">
+        <div class="project-overlay">
+          <h3>Hydrogen Combustion Stability</h3>
+          <p>Developed high-pressure injector testing for sequential combustion systems.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="assets/images/project2.jpg" alt="Project 2">
+        <div class="project-overlay">
+          <h3>Ammonia Flame Propagation</h3>
+          <p>Studied ignition dynamics in SI-GDI engines using Schlieren imaging.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PUBLICATIONS SECTION ================= -->
+  <section id="publications" class="publications">
+    <h2>Publications</h2>
+    <ul>
+      <li>“Ignition Characteristics of Hydrogen/Air Flames” — ASME Turbo Expo, 2024</li>
+      <li>“VLES vs LES Turbulence Modeling” — JAFM Journal, 2020</li>
+    </ul>
+    <a href="publications.html" class="btn-secondary">View All Publications →</a>
+  </section>
+
+  <!-- ================= CONTACT SECTION ================= -->
+  <section id="contact" class="contact">
+    <h2>Let's Connect</h2>
+    <div class="social-icons">
+      <a href="https://linkedin.com" target="_blank"><img src="assets/icons/linkedin.png"></a>
+      <a href="https://scholar.google.com" target="_blank"><img src="assets/icons/scholar.png"></a>
+      <a href="https://instagram.com" target="_blank"><img src="assets/icons/instagram.png"></a>
+      <a href="mailto:ptiwarixyz@gmail.com"><img src="assets/icons/email.png"></a>
+    </div>
+  </section>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="scripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratik Tiwari — Portfolio (Interactive)</title>
+
+  <!-- Tailwind (CDN for prototyping) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Three.js (shader) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+
+  <!-- fullPage.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.23/fullpage.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand: #10b981;
+      --bg-dark: #071021;
+      --bg-light: #f7fafc;
+      --glass: rgba(255,255,255,0.04);
+    }
+    html,body{height:100%;margin:0;background:var(--bg-dark);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#e6eef6}
+    /* NAV */
+    nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:auto}
+    .nav-bar{display:flex;gap:20px;padding:10px 16px;background:rgba(255,255,255,0.03);backdrop-filter:blur(8px);border-radius:14px;align-items:center}
+    .nav-title{font-weight:700;color:#f8fafc;margin-right:12px}
+    .nav-bar a{color:#eef2ff;text-decoration:none;font-weight:600}
+    .nav-bar a:hover{color:var(--brand)}
+    .toggle-btn{margin-left:12px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.03);cursor:pointer}
+
+    /* fullpage sections */
+    .section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:56px;position:relative;overflow:hidden}
+    /* canvas */
+    canvas#flame{position:absolute;inset:0;z-index:0;display:block}
+    /* hero content */
+    .hero-wrap{position:relative;z-index:8;max-width:1100px;display:flex;gap:32px;align-items:center;color:white;padding:12px}
+    .hero-left{flex:1}
+    .hero-right{flex:1;display:flex;align-items:center;justify-content:center}
+    .cta{display:inline-flex;gap:12px;margin-top:18px}
+
+    /* timeline */
+    .timeline{position:relative;padding-left:44px;margin-top:2rem;max-width:900px}
+    .timeline::before{content:"";position:absolute;left:22px;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--brand),#059669)}
+    .timeline-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(8px);border-radius:12px;padding:16px;margin-bottom:22px;border:1px solid rgba(255,255,255,0.04);transform:translateX(-30px);opacity:0}
+
+    /* skills */
+    .skill-bar{height:12px;border-radius:999px;background:#0f172a;overflow:hidden}
+    .skill-fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),#059669);border-radius:999px;position:relative}
+    .skill-val{font-weight:700;color:var(--brand)}
+
+    /* projects flip cards */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px}
+    @media (max-width:1000px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .projects-grid{grid-template-columns:1fr} .hero-wrap{flex-direction:column;text-align:center} nav{left:12px;transform:none} }
+    .flip-card{perspective:1200px;height:320px}
+    .flip-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.9,.3,1);box-shadow:0 10px 30px rgba(2,6,23,0.6);transform:translateZ(0)}
+    .flip-card-front, .flip-card-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;padding:18px}
+    .flip-card-front{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.04);color:#eef2ff}
+    .flip-card-back{background:linear-gradient(180deg, rgba(16,185,129,0.12), rgba(2,6,23,0.6));transform:rotateY(180deg);color:white}
+    .project-img{height:140px;background:#072038;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7)}
+
+    /* publications */
+    .pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px}
+    @media (max-width:1000px){ .pub-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .pub-grid{grid-template-columns:1fr} }
+
+    /* contact */
+    #contact { background: linear-gradient(180deg,#ffffff,#f8fafc); color:#042023 }
+    .contact-wrapper{ position: relative; max-width:720px; margin:0 auto; padding:36px; border-radius:14px; background: rgba(255,255,255,0.92); box-shadow: 0 12px 40px rgba(2,6,23,0.08); }
+    canvas#particles{ position:absolute; inset:0; z-index:0; border-radius:14px; pointer-events:none }
+    .magnetic { display:inline-block; cursor:pointer; }
+
+    /* magnetic button base */
+    .btn-magnetic { display:inline-block; padding:12px 20px; border-radius:999px; background: linear-gradient(90deg,var(--brand),#059669); color:#012018; font-weight:700; box-shadow:0 10px 30px rgba(16,185,129,0.12); transform:translateZ(0); }
+    .mode-toggle { font-size:14px; padding:8px; border-radius:8px; background:rgba(255,255,255,0.02) }
+    /* subtle helper */
+    .muted{ color: rgba(255,255,255,0.75) }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-bar">
+      <div class="nav-title">Pratik Tiwari</div>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+
+      <div style="margin-left:8px;display:flex;align-items:center">
+        <div id="themeToggle" class="toggle-btn mode-toggle" title="Toggle dark / light">🌙</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- fullpage wrapper -->
+  <div id="fullpage">
+
+    <!-- HERO -->
+    <section id="home" class="section" aria-label="Home">
+      <!-- IMPORTANT: This canvas uses your shader exactly as provided previously -->
+      <canvas id="flame"></canvas>
+
+      <div class="hero-wrap">
+        <div class="hero-left">
+          <h1 id="hero-name" class="text-4xl md:text-5xl font-extrabold">Hi — I'm <span style="color:var(--brand)">Pratik</span>.</h1>
+          <p id="hero-tag" class="mt-4 text-lg text-gray-100 max-w-xl">Combustion systems engineer · CFD & diagnostics · propulsion test & automation</p>
+          <div class="cta">
+            <a href="files/Pratik_Tiwari_CV.pdf" class="px-4 py-2 rounded-lg bg-white text-black font-semibold">Download CV</a>
+            <a href="#contact" class="px-4 py-2 rounded-lg border border-white text-white">Let's Connect</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <img src="assets/img/portrait.jpg" alt="Pratik portrait" style="width:220px;height:220px;border-radius:16px;object-fit:cover;border:3px solid rgba(255,255,255,0.05);box-shadow:0 20px 60px rgba(16,185,129,0.08)">
+        </div>
+      </div>
+    </section>
+
+<!-- ---------- Flame shader (Three.js) - exact shader code you gave earlier ---------- -->
+  <script>
+  (function(){
+    const canvas = document.getElementById('flame');
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+
+    const geometry = new THREE.PlaneGeometry(2,2);
+
+    const uniforms = {
+      u_time: { value: 0.0 },
+      u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      u_mouse: { value: new THREE.Vector2(-9999,-9999) },
+      u_intensity: { value: 1.0 }
+    };
+
+    const frag = `precision highp float;
+    uniform vec2 u_resolution; uniform float u_time; uniform vec2 u_mouse; uniform float u_intensity;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
+    float noise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);vec2 u=f*f*(3.0-2.0*f);float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+    float fbm(vec2 p){float v=0.0;float a=0.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.0;a*=0.5;}return v;}
+    void main(){ vec2 uv=gl_FragCoord.xy/u_resolution.xy; vec2 pos=uv-0.5; pos.x*=u_resolution.x/u_resolution.y;
+      float t=u_time*0.6;
+      float core = smoothstep(0.2,0.9,1.0 - (pos.y+0.5)*1.6);
+      float n = fbm(vec2(pos.x*2.0, pos.y*3.0 - t*0.8));
+      float flameshape = core * (0.5 + 0.8*n);
+      float radial = smoothstep(0.9,0.2,length(pos.xy*vec2(1.0,0.9)));
+      float intensity = clamp(flameshape * radial, 0.0,1.0);
+      float smoke = fbm(vec2(pos.x*0.8, pos.y*1.2 - t*0.25));
+      smoke = smoothstep(0.2,0.8,smoke);
+      vec3 hot = vec3(1.0,0.96,0.8);
+      vec3 yellow = vec3(1.0,0.7,0.14);
+      vec3 orange = vec3(0.98,0.42,0.08);
+      vec3 red = vec3(0.65,0.12,0.03);
+      vec3 smokeCol = vec3(0.06,0.06,0.08);
+      vec3 col = mix(smokeCol, red, intensity);
+      col = mix(col, orange, intensity*0.8);
+      col = mix(col, yellow, intensity*0.5);
+      col = mix(col, hot, intensity*0.25);
+      float flick = 0.12 * noise(vec2(pos.x*5.0 + u_time*0.8, pos.y*3.0));
+      float md = length((gl_FragCoord.xy - u_mouse) / u_resolution.xy);
+      float mouseBoost = exp(-md*6.0);
+      intensity += flick * mouseBoost * 0.6;
+      float smokeOverlay = smoothstep(0.25, 0.8, smoke) * (1.0 - intensity*0.6);
+      float alpha = clamp(intensity*1.2 + (1.0 - pos.y)*0.2, 0.0, 1.0);
+      vec3 finalCol = mix(vec3(0.02,0.02,0.03), col*(0.6 + intensity*0.8), alpha);
+      finalCol = mix(finalCol, vec3(0.08,0.08,0.09), smokeOverlay*0.6);
+      finalCol = 1.0 - exp(-finalCol * (2.2 * u_intensity));
+      float vignette = smoothstep(0.0, 0.8, 1.0 - length(pos)*1.3);
+      finalCol *= vignette;
+      gl_FragColor = vec4(finalCol, clamp(alpha + (1.0 - smokeOverlay)*0.05, 0.0, 1.0));
+    }`;
+
+    const material = new THREE.ShaderMaterial({ fragmentShader:frag, uniforms, transparent:true, depthWrite:false });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    function onPointerMove(e){
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = (e.clientX - rect.left);
+      const y = (rect.bottom - e.clientY);
+      uniforms.u_mouse.value.set(x, y);
+    }
+    window.addEventListener('pointermove', onPointerMove);
+
+    function onResize(){
+      const w=window.innerWidth,h=window.innerHeight;
+      renderer.setSize(w,h);
+      uniforms.u_resolution.value.set(w,h);
+    }
+    window.addEventListener('resize', onResize,{passive:true});
+
+    const clock = new THREE.Clock();
+    (function renderLoop(){
+      uniforms.u_time.value = clock.getElapsedTime();
+      renderer.render(scene, camera);
+      requestAnimationFrame(renderLoop);
+    })();
+
+    window._flameUniforms = uniforms;
+  })();
+  </script>
