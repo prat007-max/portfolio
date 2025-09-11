@@ -1,130 +1,265 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Pratik Tiwari | Research Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pratik Tiwari — Portfolio</title>
+
+  <!-- Fonts & icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
 
-  <!-- GSAP + ScrollTrigger -->
-  <script src="libs/gsap.min.js"></script>
-  <script src="libs/ScrollTrigger.min.js"></script>
-  <script src="libs/three.min.js"></script>
-
-  <!-- Locomotive Scroll -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-
 <body>
-  <!-- ================= NAVBAR ================= -->
-  <header class="navbar">
-    <div class="logo">Pratik Tiwari</div>
-    <nav>
-      <ul>
+  <header class="site-header">
+    <nav class="nav-bar" aria-label="Main">
+      <div class="brand">Pratik Tiwari</div>
+      <ul class="nav-links" role="menubar">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌙</button>
     </nav>
-    <button id="themeToggle" class="theme-btn">🌙</button>
   </header>
 
-  <!-- ================= HERO SECTION ================= -->
-  <section id="home" class="hero">
-    <canvas id="flameCanvas"></canvas>
-    <div class="hero-content">
-      <h1>Hi, I'm <span>Pratik Tiwari</span></h1>
-      <p>Combustion Systems Engineer | Researcher | Innovator</p>
-      <a href="#projects" class="btn-primary">Explore My Work</a>
-    </div>
-  </section>
+  <main id="main">
+    <!-- HERO -->
+    <section id="home" class="section hero">
+      <canvas id="flame" aria-hidden="true"></canvas>
 
-  <!-- ================= ABOUT SECTION ================= -->
-  <section id="about" class="about">
-    <h2>About Me</h2>
-    <div class="tabs">
-      <button class="tab active" data-tab="education">Education</button>
-      <button class="tab" data-tab="awards">Awards</button>
-      <button class="tab" data-tab="extra">Extra</button>
-    </div>
-    <div class="tab-content" id="education">
-      <ul>
-        <li><strong>M.S.</strong> Aerospace Engineering - UT Space Institute (2024)</li>
-        <li><strong>M.E.</strong> Aerospace Propulsion - NUAA, China (2020)</li>
-        <li><strong>B.Tech</strong> Aerospace Engineering - SRM University (2015)</li>
-      </ul>
-    </div>
-    <div class="tab-content hidden" id="awards">
-      <ul>
-        <li>Best Research Paper — ASME Turbo Expo 2024</li>
-        <li>Graduate Research Fellowship — UT Space Institute</li>
-        <li>Innovation Award — IIT Madras</li>
-      </ul>
-    </div>
-    <div class="tab-content hidden" id="extra">
-      <p>Diploma in Photography • Conference Speaker • Research Mentor</p>
-    </div>
-  </section>
+      <div class="hero-content wrap">
+        <div class="hero-left">
+          <h1 class="hero-title" id="heroTitle">Hi — I'm <span class="accent">Pratik</span>.</h1>
+          <p class="hero-sub">Combustion systems engineer · CFD & diagnostics · propulsion test & automation</p>
 
-  <!-- ================= SKILLS SECTION ================= -->
-  <section id="skills" class="skills">
-    <h2>Technical Skills</h2>
-    <div class="skill-bar" data-skill="CFD Analysis" data-value="95"></div>
-    <div class="skill-bar" data-skill="Combustion Systems" data-value="90"></div>
-    <div class="skill-bar" data-skill="Laser Diagnostics" data-value="85"></div>
-    <div class="skill-bar" data-skill="Python & MATLAB" data-value="88"></div>
-    <div class="skill-bar" data-skill="CAD & Testing" data-value="92"></div>
-  </section>
+          <div class="cta">
+            <a class="btn btn-primary magnetic" href="#about">About</a>
+            <a class="btn btn-outline magnetic" href="#projects">Projects</a>
+            <a class="btn btn-primary magnetic" href="#contact">Contact</a>
+          </div>
+        </div>
 
-  <!-- ================= PROJECTS SECTION ================= -->
-  <section id="projects" class="projects">
-    <h2>Highlighted Projects</h2>
-    <div class="project-grid">
-      <div class="project-card">
-        <img src="assets/images/project1.jpg" alt="Project 1">
-        <div class="project-overlay">
-          <h3>Hydrogen Combustion Stability</h3>
-          <p>Developed high-pressure injector testing for sequential combustion systems.</p>
+        <div class="hero-right">
+          <img src="assets/img/portrait.jpg" alt="Pratik portrait" class="portrait">
         </div>
       </div>
-      <div class="project-card">
-        <img src="assets/images/project2.jpg" alt="Project 2">
-        <div class="project-overlay">
-          <h3>Ammonia Flame Propagation</h3>
-          <p>Studied ignition dynamics in SI-GDI engines using Schlieren imaging.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="wrap">
+        <h2 class="section-title">About</h2>
+        <p class="muted">I design and test high-performance combustion systems for aerospace and energy — experiments, diagnostics, CFD, and test automation. I build test rigs, design injectors, and automate data processing for accelerated development cycles.</p>
+
+        <div class="about-grid">
+          <div class="card">
+            <h3>Education</h3>
+            <p class="muted">MS — Aerospace Engineering (UT Space Institute, 2024)</p>
+            <p class="muted">MEng — Propulsion (NUAA, 2020)</p>
+          </div>
+
+          <div class="card">
+            <h3>Awards & Extras</h3>
+            <ul class="muted">
+              <li>Photography Diploma — New York School of Photography</li>
+              <li>Best Poster — XYZ Conference</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Interests</h3>
+            <p class="muted">High-speed imaging, turbulence modeling, test automation, electronics for sensors.</p>
+          </div>
         </div>
       </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Education & Awards</h2>
+        <div class="edu-grid">
+          <article class="edu-card">
+            <h4>MS — Aerospace Engineering</h4>
+            <p class="muted">University of Tennessee Space Institute — Dec 2024</p>
+            <p class="muted small">Thesis: [Thesis title]. Focus: combustion, diagnostics & high-pressure testing.</p>
+          </article>
+          <article class="edu-card">
+            <h4>MEng — Propulsion</h4>
+            <p class="muted">NUAA, China — Apr 2020</p>
+            <p class="muted small">Research & practical experience in injector systems and propulsion.</p>
+          </article>
+          <article class="edu-card">
+            <h4>BTech — Aerospace Engineering</h4>
+            <p class="muted">SRM University, Chennai — Nov 2015</p>
+            <p class="muted small">Undergraduate project: [Short description].</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="skills-list">
+          <div class="skill-row">
+            <div class="skill-label">Propulsion & Gas Turbine Systems</div>
+            <div class="skill-value">90%</div>
+            <div class="skill-bar"><div class="skill-fill" data-fill="90%"></div></div>
+          </div>
+
+          <div class="skill-row">
+            <div class="skill-label">CFD (ANSYS Fluent / OpenFOAM)</div>
+            <div class="skill-value">85%</div>
+            <div class="skill-bar"><div class="skill-fill" data-fill="85%"></div></div>
+          </div>
+
+          <div class="skill-row">
+            <div class="skill-label">Testing & Diagnostics</div>
+            <div class="skill-value">92%</div>
+            <div class="skill-bar"><div class="skill-fill" data-fill="92%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Professional Experience</h2>
+
+        <div class="exp-list">
+          <article class="exp-item" data-anim>
+            <div class="exp-left">
+              <div class="exp-date">Apr 2025 − Present</div>
+              <div class="muted">Pinnacle Arc LLC</div>
+            </div>
+            <div class="exp-right">
+              <h4>Data Analyst (Contract) — Propulsion & Test Data</h4>
+              <p class="muted">Automated data pipelines, maintained high-pressure test datasets, supported CFD-validation efforts.</p>
+            </div>
+          </article>
+
+          <article class="exp-item" data-anim>
+            <div class="exp-left">
+              <div class="exp-date">Sep 2023 − Dec 2024</div>
+              <div class="muted">UT Space Institute</div>
+            </div>
+            <div class="exp-right">
+              <h4>Graduate Researcher — Combustion Systems</h4>
+              <p class="muted">Led ignition and flame diagnostics projects using high-speed chemiluminescence and Schlieren; correlated experiments with LES/VLES CFD.</p>
+            </div>
+          </article>
+
+          <article class="exp-item" data-anim>
+            <div class="exp-left">
+              <div class="exp-date">Sep 2022 − Aug 2023</div>
+              <div class="muted">Oregon State University</div>
+            </div>
+            <div class="exp-right">
+              <h4>Graduate Research Assistant</h4>
+              <p class="muted">Developed test rigs and instrumentation for spray/flame experiments; analyzed PIV & LDI datasets.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Selected Projects</h2>
+
+        <div class="project-card magnetic">
+         <div class="project-card-inner">
+          <div class="project-card-front">
+           <h4> high pressure combustion rig design<h4>
+           </div>
+           <div class="project-card-back">
+           <h4> high pressure combustion rig design<h4></h4>
+           </div>
+         </div>
+        </div>
+
+          <article class="project-card" tabindex="0" data-anim>
+            <h4>Ammonia SI GDI study</h4>
+            <p class="muted">GDI experiments and diagnostics for ammonia/hydrocarbon blends.</p>
+          </article>
+
+          <article class="project-card" tabindex="0" data-anim>
+            <h4>Test automation & reporting</h4>
+            <p class="muted">Automated DAQ scripts, postprocessing, and auto-generated test reports for campaigns.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Publications</h2>
+
+        <div class="pub-grid">
+          <a class="pub-card" href="https://example.com/paper1" target="_blank" rel="noopener noreferrer">
+            <h4>Ignition Characteristics of Hydrogen/Air</h4>
+            <div class="muted">ASME Turbo-Expo, 2024</div>
+          </a>
+
+          <a class="pub-card" href="https://example.com/paper2" target="_blank" rel="noopener noreferrer">
+            <h4>Comparison of VLES and LES Turbulence Modeling</h4>
+            <div class="muted">Journal of Applied Fluid Mechanics, 2020</div>
+          </a>
+
+          <a class="pub-card" href="all_publications.html" target="_blank" rel="noopener noreferrer">
+            <h4>All Publications & Conferences</h4>
+            <div class="muted">View full list</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-wrapper">
+          <p style="margin:0 0 8px 0">Email: <a href="mailto:ptiwari4@vols.utk.edu">ptiwari4@vols.utk.edu</a></p>
+          <p style="margin:0 0 8px 0">Phone: +1 458-272-7955</p>
+
+          <div class="contact-icons" role="list">
+            <a href="https://www.linkedin.com/in/pratiktiwari/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://orcid.org" target="_blank" rel="noopener noreferrer" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+            <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+            <a href="mailto:ptiwari4@vols.utk.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Pratik Tiwari. All rights reserved.</div>
+        <div class="footer-links"><a href="files/Pratik_Tiwari_CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a></div>
+      </div>
     </div>
-  </section>
+  </footer>
 
-  <!-- ================= PUBLICATIONS SECTION ================= -->
-  <section id="publications" class="publications">
-    <h2>Publications</h2>
-    <ul>
-      <li>“Ignition Characteristics of Hydrogen/Air Flames” — ASME Turbo Expo, 2024</li>
-      <li>“VLES vs LES Turbulence Modeling” — JAFM Journal, 2020</li>
-    </ul>
-    <a href="publications.html" class="btn-secondary">View All Publications →</a>
-  </section>
-
-  <!-- ================= CONTACT SECTION ================= -->
-  <section id="contact" class="contact">
-    <h2>Let's Connect</h2>
-    <div class="social-icons">
-      <a href="https://linkedin.com" target="_blank"><img src="assets/icons/linkedin.png"></a>
-      <a href="https://scholar.google.com" target="_blank"><img src="assets/icons/scholar.png"></a>
-      <a href="https://instagram.com" target="_blank"><img src="assets/icons/instagram.png"></a>
-      <a href="mailto:ptiwarixyz@gmail.com"><img src="assets/icons/email.png"></a>
-    </div>
-  </section>
-
-  <!-- ================= SCRIPTS ================= -->
-  <script src="scripts.js"></script>
+  <!-- Main script -->
+  <script src="script.js"></script>
 </body>
 </html>
