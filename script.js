@@ -190,5 +190,31 @@ document.querySelectorAll('.project-card.magnetic').forEach(card => {
     card.style.transform = '';
   });
 });
+// Scroll-triggered animation for experience cards
+document.addEventListener("scroll", () => {
+  document.querySelectorAll(".experience-card").forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100 && rect.bottom > 100) {
+      card.classList.add("active");
+    }
+  });
+});
 
 })();
+document.addEventListener("scroll", () => {
+  document.querySelectorAll(".skill-fill").forEach(fill => {
+    const rect = fill.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      fill.style.width = fill.dataset.fill;
+    }
+  });
+});
+// Scroll-triggered animation for experience cards
+document.addEventListener("scroll", () => {
+  document.querySelectorAll(".experience-card").forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      card.classList.add("active");
+    }
+  });
+});

@@ -111,72 +111,73 @@
 
     <!-- SKILLS -->
     <section id="skills" class="section">
-      <div class="wrap">
-        <h2 class="section-title">Skills</h2>
-
-        <div class="skills-list">
-          <div class="skill-row">
-            <div class="skill-label">Propulsion & Gas Turbine Systems</div>
-            <div class="skill-value">90%</div>
-            <div class="skill-bar"><div class="skill-fill" data-fill="90%"></div></div>
-          </div>
-
-          <div class="skill-row">
-            <div class="skill-label">CFD (ANSYS Fluent / OpenFOAM)</div>
-            <div class="skill-value">85%</div>
-            <div class="skill-bar"><div class="skill-fill" data-fill="85%"></div></div>
-          </div>
-
-          <div class="skill-row">
-            <div class="skill-label">Testing & Diagnostics</div>
-            <div class="skill-value">92%</div>
-            <div class="skill-bar"><div class="skill-fill" data-fill="92%"></div></div>
-          </div>
-        </div>
+  <div class="wrap">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      
+      <div class="skill-card">
+        <div class="skill-label">Propulsion & Gas Turbine Systems</div>
+        <div class="skill-bar"><div class="skill-fill" data-fill="90%"></div></div>
+        <span class="skill-value">90%</span>
       </div>
-    </section>
+
+      <div class="skill-card">
+        <div class="skill-label">CFD (ANSYS Fluent / OpenFOAM)</div>
+        <div class="skill-bar"><div class="skill-fill" data-fill="85%"></div></div>
+        <span class="skill-value">85%</span>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-label">Testing & Diagnostics</div>
+        <div class="skill-bar"><div class="skill-fill" data-fill="92%"></div></div>
+        <span class="skill-value">92%</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
     <!-- EXPERIENCE -->
-    <section id="experience" class="section">
-      <div class="wrap">
-        <h2 class="section-title">Professional Experience</h2>
-
-        <div class="exp-list">
-          <article class="exp-item" data-anim>
-            <div class="exp-left">
-              <div class="exp-date">Apr 2025 − Present</div>
-              <div class="muted">Pinnacle Arc LLC</div>
-            </div>
-            <div class="exp-right">
-              <h4>Data Analyst (Contract) — Propulsion & Test Data</h4>
-              <p class="muted">Automated data pipelines, maintained high-pressure test datasets, supported CFD-validation efforts.</p>
-            </div>
-          </article>
-
-          <article class="exp-item" data-anim>
-            <div class="exp-left">
-              <div class="exp-date">Sep 2023 − Dec 2024</div>
-              <div class="muted">UT Space Institute</div>
-            </div>
-            <div class="exp-right">
-              <h4>Graduate Researcher — Combustion Systems</h4>
-              <p class="muted">Led ignition and flame diagnostics projects using high-speed chemiluminescence and Schlieren; correlated experiments with LES/VLES CFD.</p>
-            </div>
-          </article>
-
-          <article class="exp-item" data-anim>
-            <div class="exp-left">
-              <div class="exp-date">Sep 2022 − Aug 2023</div>
-              <div class="muted">Oregon State University</div>
-            </div>
-            <div class="exp-right">
-              <h4>Graduate Research Assistant</h4>
-              <p class="muted">Developed test rigs and instrumentation for spray/flame experiments; analyzed PIV & LDI datasets.</p>
-            </div>
-          </article>
-        </div>
+    <section id="experience" class="experience-section">
+      <h2 class="section-title">Experience</h2>
+     <div class="experience-card">
+      <div class="exp-left">
+       <h3>Apr 2025 − Present</h3>
+       <h4>Pinnacle Arc LLC</h4>
+       <p>Data Analyst (Contract)</p>
       </div>
-    </section>
+      <div class="exp-right">
+       <h4>Propulsion & Test Data</h4>
+       <p>Automated data pipelines, maintained high-pressure test datasets, supported CFD-validation efforts.</p>
+      </div>
+    </div>
+    </article>
+
+     <div class="experience-card" data-anim>
+      <div class="exp-left">
+       <h3>Sep 2023 − Dec 2024</h3>
+       <h4>UT Space Institute</h4>
+       <p>Graduate Researcher</p>
+      </div>
+      <div class="exp-right">
+       <h4>Combustion Systems</h4>
+       <p>Led ignition and flame diagnostics projects using high-speed chemiluminescence and Schlieren; correlated experiments with LES/VLES CFD.</p>
+      </div>
+     </div>
+      
+       <div class="experience-card" data-anim>
+      <div class="exp-left">
+       <h3>Sep 2022 − Aug 2023</h3>
+       <h4>Oregon State University</h4>
+       <p>Graduate Researcher Assistant</p>
+      </div>
+      <div class="exp-right">
+       <h4>Combustion Systems</h4>
+       <p>Developed test rigs and instrumentation for spray/flame experiments; analyzed PIV & LDI datasets.</p>
+      </div>
+     </div>
+         
 
     <!-- PROJECTS -->
     <section id="projects" class="section">
@@ -197,19 +198,19 @@
          </div>
         </div>
 
-
-          <article class="project-card" tabindex="0" data-anim>
-            <h4>Ammonia SI GDI study</h4>
-            <p class="muted">GDI experiments and diagnostics for ammonia/hydrocarbon blends.</p>
-          </article>
-
-          <article class="project-card" tabindex="0" data-anim>
-            <h4>Test automation & reporting</h4>
-            <p class="muted">Automated DAQ scripts, postprocessing, and auto-generated test reports for campaigns.</p>
-          </article>
+        <div class="projects-grid">
+         <div class="project-card magnetic">
+          <div class="project-card-inner">
+           <div class="project-card-front">
+            <h4>High Pressure Combustion Rig Design</h4>
+           </div>
+            <div class="project-card-back">
+            <h4>More Details</h4>
+            <p>Custom-designed high-pressure rig for injector testing and diagnostics.</p>
+           </div>
+          </div>
+         </div>
         </div>
-      </div>
-    </section>
 
     <!-- PUBLICATIONS -->
     <section id="publications" class="section">
@@ -236,23 +237,47 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="wrap">
-        <h2 class="section-title">Contact</h2>
-        <div class="contact-wrapper">
-          <p style="margin:0 0 8px 0">Email: <a href="mailto:ptiwari4@vols.utk.edu">ptiwari4@vols.utk.edu</a></p>
-          <p style="margin:0 0 8px 0">Phone: +1 458-272-7955</p>
+    <!-- CONTACT SECTION -->
+         <!-- CONTACT SECTION -->
+<section id="contact" class="contact-section">
+  <h2>Contact</h2>
+  <div class="contact-grid">
+    
+    <!-- LEFT: Contact Form -->
+    <form class="contact-form">
+      <p class="form-title">Feel free to contact me</p>
+      <input type="text" placeholder="Name" required>
+      <input type="text" placeholder="Subject" required>
+      <input type="email" placeholder="E-mail" required>
+      <textarea placeholder="Your Message" rows="4" required></textarea>
+      <button type="submit" class="btn-send">Send</button>
+    </form>
 
-          <div class="contact-icons" role="list">
-            <a href="https://www.linkedin.com/in/pratiktiwari/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="https://orcid.org" target="_blank" rel="noopener noreferrer" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
-            <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-            <a href="mailto:ptiwari4@vols.utk.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
-          </div>
+    <!-- RIGHT: Info + Socials -->
+    <div class="contact-info">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="icon">📧</div>
+          <span>ptiwar4@vols.utk.edu</span>
+        </div>
+        <div class="info-item">
+          <div class="icon">📱</div>
+          <span>+1 458 272 7955</span>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/YOUR_USERNAME" target="_blank">in</a>
+        <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank">G</a>
+        <a href="https://orcid.org/YOUR_ID" target="_blank">O</a>
+        <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank">IG</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+      
+</section>
 
   <footer class="site-footer">
     <div class="wrap">
@@ -265,5 +290,6 @@
 
   <!-- Main script -->
   <script src="script.js"></script>
+  
 </body>
 </html>
