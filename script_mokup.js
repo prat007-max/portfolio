@@ -35,10 +35,32 @@
 // Initialize AOS
 document.addEventListener('DOMContentLoaded',()=>{ if (window.AOS) AOS.init({ once:true, duration:700, easing:'ease-out-cubic' }); });
 
-// HERO flame (orange swirl V)
+// HERO flame with SVG fallback
 (function heroFlame(){
   const canvas = document.getElementById('flame');
-  if(!canvas || !window.THREE) return;
+  if(!canvas) return;
+  if(!window.THREE){
+    const wrap=canvas.parentElement;
+    wrap.innerHTML = `
+      <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block;mix-blend-mode:screen">
+        <defs>
+          <radialGradient id="g" cx="50%" cy="60%" r="60%">
+            <stop offset="0%" stop-color="#ffd3a3"/>
+            <stop offset="60%" stop-color="#ff8c3b"/>
+            <stop offset="100%" stop-color="rgba(255,140,59,0)"/>
+          </radialGradient>
+        </defs>
+        <g opacity="0.9">
+          <path fill="url(#g)">
+            <animate attributeName="d" dur="6s" repeatCount="indefinite" values="
+              M300,260 C220,220 210,180 300,80 C390,180 380,220 300,260 Z;
+              M300,260 C230,210 210,170 300,90 C390,170 370,220 300,260 Z;
+              M300,260 C220,220 210,180 300,80 C390,180 380,220 300,260 Z"/>
+          </path>
+        </g>
+      </svg>`;
+    return;
+  }
   const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
   const scene = new THREE.Scene();
@@ -90,7 +112,7 @@ document.addEventListener('DOMContentLoaded',()=>{ if (window.AOS) AOS.init({ on
   tick();
 })();
 
-// Flame rail (side) — vertex shader fixed
+// Flame rail (side) — half flame that alternates sides
 (function railFlame(){
   const canvas = document.getElementById('flameRail');
   if(!canvas || !window.THREE) return;
