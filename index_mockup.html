@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Research Portfolio — Mockup</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style_mokup.css">
+</head>
+<body>
+  <header class="site-header wrap">
+    <nav class="nav" id="siteNav">
+      <div class="brand">Your Name</div>
+      <button class="menu" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">☰</button>
+      <div class="nav-right">
+        <ul id="primaryNav" aria-label="Primary">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="theme" id="theme">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Side flame rail that follows sections (left/right) -->
+  <canvas id="flameRail" class="flame-rail" aria-hidden="true"></canvas>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero snap">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="avatar">
+          <img class="portrait" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=900&auto=format&fit=crop" alt="Portrait placeholder"/>
+          <span class="glow" aria-hidden="true"></span>
+        </div>
+        <div class="flame-wrap"><canvas id="flame" aria-hidden="true"></canvas></div>
+        <div>
+          <h1 data-aos="fade-up">Hi — I'm <span class="accent-text">Your Name</span>.</h1>
+          <p class="hero-sub" data-aos="fade-up" data-aos-delay="100">Combustion systems · CFD & diagnostics · propulsion test & automation</p>
+          <div class="pill-row" aria-label="highlights" data-aos="zoom-in" data-aos-delay="180">
+            <span class="pill">High-pressure rigs</span>
+            <span class="pill">Chemiluminescence & Schlieren</span>
+            <span class="pill">LES/VLES validation</span>
+            <span class="pill">Automation (Python/DAQ)</span>
+          </div>
+          <div class="cta ignite" data-aos="fade-up" data-aos-delay="240">
+            <a class="btn primary" id="igniteBtn" href="#about">Let's start ignition</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="wrap snap">
+      <h2 class="section-title">About</h2>
+      <p class="lede">I design and test high-performance combustion systems for aerospace and energy — experiments, diagnostics, CFD, and test automation.</p>
+      <div class="about-layout">
+        <div class="stack">
+          <article class="card" data-aos="fade-right"><h3>Bio</h3><p>Short professional summary goes here. Focus, interests, and current goals.</p></article>
+          <article class="card" data-aos="fade-right" data-aos-delay="120"><h3>Focus Areas</h3><ul><li>Ignition & stability metrics</li><li>Injector/spray design</li><li>LES/VLES validation</li></ul></article>
+        </div>
+        <div class="stack">
+          <article class="card" data-aos="fade-left"><h3>Awards</h3><ul><li>Best Poster — Turbo Expo</li><li>Photography Diploma — NYSoP</li></ul></article>
+          <article class="card" data-aos="fade-left" data-aos-delay="120"><h3>Interests</h3><p>High-speed imaging, turbulence modeling, electronics for sensors.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="wrap snap">
+      <h2 class="section-title">Education</h2>
+      <p class="lede">University & year (colored meta) on the left; the credential in a clean white card on the right.</p>
+      <div class="edu">
+        <div class="edu-item" data-aos="fade-up">
+          <div class="edu-meta metaBox"><strong>UT Space Institute</strong><span>2023–2024</span></div>
+          <div class="edu-degree card"><h3>MS — Aerospace Engineering</h3><p>Combustion & diagnostics focus. Thesis on ignition metrics in lean H₂ systems.</p></div>
+        </div>
+        <div class="edu-item" data-aos="fade-up" data-aos-delay="120">
+          <div class="edu-meta metaBox"><strong>NUAA</strong><span>2018–2020</span></div>
+          <div class="edu-degree card"><h3>MEng — Propulsion</h3><p>Injector/spray design and rig development, CFD-assisted test planning.</p></div>
+        </div>
+        <div class="edu-item" data-aos="fade-up" data-aos-delay="220">
+          <div class="edu-meta metaBox"><strong>SRM University</strong><span>2011–2015</span></div>
+          <div class="edu-degree card"><h3>BTech — Aerospace</h3><p>Fundamentals in gas turbines, instrumentation, and controls.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="wrap snap">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill" data-aos="fade-up"><div class="skill-label">Propulsion & Gas Turbines</div><div class="skill-bar"><div class="skill-fill" data-fill="90%"></div></div></div>
+        <div class="skill" data-aos="fade-up" data-aos-delay="100"><div class="skill-label">CFD (Fluent / OpenFOAM)</div><div class="skill-bar"><div class="skill-fill" data-fill="85%"></div></div></div>
+        <div class="skill" data-aos="fade-up" data-aos-delay="200"><div class="skill-label">Testing & Diagnostics</div><div class="skill-bar"><div class="skill-fill" data-fill="92%"></div></div></div>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research" class="wrap snap">
+      <h2 class="section-title">Research Focus</h2>
+      <p class="lede">Ignition, flame stabilization, and injector design using high-speed diagnostics and simulation.</p>
+      <div class="grid-3">
+        <article class="card"><h3>Ignition & Stability</h3><p>Transient ignition, lean blow-out, flame anchoring; high-speed chemiluminescence.</p></article>
+        <article class="card"><h3>Injectors & Sprays</h3><p>High-pressure rigs, spray characterization, optical access design.</p></article>
+        <article class="card"><h3>Simulation Links</h3><p>LES/VLES correlation, reduced-order models for test planning.</p></article>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="wrap snap">
+      <h2 class="section-title">Selected Projects</h2>
+      <div class="projects">
+        <a class="proj" href="#" data-aos="zoom-in">
+          <img src="https://images.unsplash.com/photo-1520975922203-b85e88f325d0?w=1200&q=80&auto=format&fit=crop" alt="Rig design"/>
+          <div class="meta"><strong>High-Pressure Combustion Rig</strong><div>Custom injector testbed, DAQ, safety interlocks</div></div>
+          <span class="readmore">Read more</span>
+        </a>
+        <a class="proj" href="#" data-aos="zoom-in" data-aos-delay="120">
+          <img src="https://images.unsplash.com/photo-1558882224-6e0b0a1a1294?w=1200&q=80&auto=format&fit=crop" alt="Flame diagnostics"/>
+          <div class="meta"><strong>Flame Diagnostics</strong><div>HSI, Schlieren, chemiluminescence correlation</div></div>
+          <span class="readmore">Read more</span>
+        </a>
+        <a class="proj" href="#" data-aos="zoom-in" data-aos-delay="240">
+          <img src="https://images.unsplash.com/photo-1517976487492-5768d2a4b2b4?w=1200&q=80&auto=format&fit=crop" alt="CFD validation"/>
+          <div class="meta"><strong>LES/VLES Validation</strong><div>Data pipelines and model benchmarking</div></div>
+          <span class="readmore">Read more</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="wrap snap">
+      <h2 class="section-title">Publications</h2>
+      <div class="filters" data-aos="fade-up">
+        <button class="btn ghost" data-filter="all">All</button>
+        <button class="btn ghost" data-filter="journal">Journals</button>
+        <button class="btn ghost" data-filter="conf">Conferences</button>
+        <button class="btn ghost" data-filter="poster">Posters</button>
+        <a class="btn primary open-pubs" href="#">Read all publications →</a>
+      </div>
+      <div class="pub-list" id="pubList">
+        <div class="pub" data-type="conf" data-aos="fade-up"><cite>Author, A., <strong>Author, B.</strong> (2024). Ignition characteristics of hydrogen/air. <em>ASME Turbo-Expo</em>. DOI: <span class="doi">10.0000/xyz</span></cite></div>
+        <div class="pub" data-type="journal" data-aos="fade-up" data-aos-delay="120"><cite>Author, A., <strong>Author, B.</strong> (2020). VLES vs LES turbulence modeling. <em>Journal of Applied Fluid Mechanics</em>, 12(3), 123–134. DOI: <span class="doi">10.0000/abc</span></cite></div>
+      </div>
+    </section>
+
+    <!-- Publications Overlay -->
+    <div id="pubOverlay" class="overlay" aria-hidden="true" role="dialog" aria-labelledby="ovTitle">
+      <div class="ov-wrap">
+        <div class="ov-head">
+          <div class="ov-title" id="ovTitle">All Publications</div>
+          <button class="ov-close" id="ovClose">Close ✕</button>
+        </div>
+        <div class="ov-tools">
+          <input id="pubSearch" class="search" type="search" placeholder="Search by title, author, venue, year…" />
+          <button class="chip" data-chip="all">All</button>
+          <button class="chip" data-chip="journal">Journal</button>
+          <button class="chip" data-chip="conf">Conference</button>
+          <button class="chip" data-chip="poster">Poster</button>
+          <button class="chip" data-chip="recent">Last 3 years</button>
+        </div>
+        <div id="allPubsList" class="ov-grid" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="wrap snap">
+      <h2 class="section-title">Experience</h2>
+      <div class="exp-wrap">
+        <aside class="year-rail" aria-label="Years">
+          <a class="year active" href="#exp-2025">2025</a>
+          <a class="year" href="#exp-2023">2023–24</a>
+          <a class="year" href="#exp-2022">2022–23</a>
+        </aside>
+        <div class="timeline" id="timeline">
+          <div class="t-item" id="exp-2025" data-year="2025">
+            <div class="t-dot" aria-hidden="true"></div>
+            <div class="t-two">
+              <div class="t-card role"><strong>Pinnacle Arc LLC</strong><div>Data Analyst (Contract) · Apr 2025 – Present</div></div>
+              <div class="t-card resp"><strong>Responsibilities</strong><ul>
+                <li>Automated pipelines for high-pressure test data</li>
+                <li>Maintained datasets; supported CFD validation</li>
+                <li>Created QA checks and reporting dashboards</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="t-item" id="exp-2023" data-year="2023">
+            <div class="t-dot" aria-hidden="true"></div>
+            <div class="t-two">
+              <div class="t-card role"><strong>UT Space Institute</strong><div>Graduate Researcher · Sep 2023 – Dec 2024</div></div>
+              <div class="t-card resp"><strong>Responsibilities</strong><ul>
+                <li>High-speed chemiluminescence & Schlieren</li>
+                <li>Ignition metrics; correlation with LES/VLES</li>
+                <li>Rig safety, DAQ, and interlocks</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="t-item" id="exp-2022" data-year="2022">
+            <div class="t-dot" aria-hidden="true"></div>
+            <div class="t-two">
+              <div class="t-card role"><strong>Oregon State University</strong><div>GRA · Sep 2022 – Aug 2023</div></div>
+              <div class="t-card resp"><strong>Responsibilities</strong><ul>
+                <li>Spray/flame rigs; PIV & LDI analysis</li>
+                <li>Instrumentation design and calibration</li>
+                <li>Data processing automation</li>
+              </ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="wrap snap">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact">
+        <form class="form" aria-label="Contact form" onsubmit="return false;">
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="text" placeholder="Subject" required>
+          <textarea rows="4" placeholder="Your message" required></textarea>
+          <button class="send">Send</button>
+        </form>
+        <div>
+          <p class="lede">Open to PhD positions and R&D roles in combustion and CFD. Reach out via email or LinkedIn.</p>
+          <p>📧 you@example.com<br>🔗 linkedin.com/in/your-handle</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> Your Name • All rights reserved.</div>
+  </footer>
+
+  <!-- libs (load before script) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+  <!-- App script -->
+  <script src="script_mokup.js" defer></script>
+</body>
+</html>
